@@ -83,7 +83,7 @@
                             <!-- /.nav-second-level -->
                         </li>
 						<li >
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Office Management</a>
+                            <a href=""><i class="fa fa-bar-chart-o fa-fw"></i> Office Management</a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="#">Add Office</a>

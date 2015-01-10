@@ -40,7 +40,8 @@
 
 $route['default_controller'] = "welcome";
 $route['404_override'] = '';
-
+$route['office']			= "administrator/office";
+$route['deleteOffice']		= "administrator/deleteOffice";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
