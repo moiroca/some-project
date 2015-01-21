@@ -42,6 +42,26 @@ $route['default_controller'] = "welcome";
 $route['404_override'] = '';
 $route['office']			= "administrator/office";
 $route['deleteOffice']		= "administrator/deleteOffice";
+$route['editOffice']		= "administrator/editOffice";
+$route['addOffice']		= "administrator/addOffice";
+$route['addOfficeForm']		= "administrator/addOfficeForm";
+
+$route['officeHead']			= "administrator/officeHead";
+$route['addOfficeHead']			= "administrator/addOfficeHead";
+$route['addOfficeHeadForm']			= "administrator/addOfficeHeadForm";
+$route['changeStatusOfficeHead']	= "administrator/changeStatusOfficeHead";
+$route['editOfficeHead']			= "administrator/editOfficeHead";
+$route['editOfficeHeadForm']			= "administrator/editOfficeHeadForm";
+
+$route['officeSecretary']			= "administrator/officeSecretaries";
+$route['addOfficeSecretary']			= "administrator/addOfficeSecretary";
+$route['addOfficeSecretaryForm']			= "administrator/addOfficeSecretaryForm";
+
+$route['editOfficeSecretary']			= "administrator/editOfficeSecretary";
+$route['editOfficeSecretaryForm']			= "administrator/editOfficeSecretaryForm";
+$route['changeStatusOfficeSecretary']	= "administrator/changeStatusOfficeSecretary";
+
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

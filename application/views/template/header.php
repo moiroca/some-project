@@ -74,10 +74,23 @@
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> User Management </a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Office Head Management</a>
+                                    <a href="<?php echo base_url('officeHead'); ?>">Office Head Management</a>
+
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="<?php echo base_url('addOfficeHeadForm'); ?>">Add Office Head</a>
+                                        </li>
+                                    </ul>
+
                                 </li>
 								<li>
-                                    <a href="#">Office Secretary Management</a>
+                                    <a href="officeSecretary">Office Secretary Management</a>
+
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="<?php echo base_url('addOfficeSecretaryForm'); ?>">Add Secretary</a>
+                                        </li>
+                                    </ul>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -86,7 +99,7 @@
                             <a href="<?php echo base_url('office'); ?>"><i class="fa fa-bar-chart-o fa-fw"></i> Office Management</a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Add Office</a>
+                                    <a href="<?php echo base_url('addOfficeForm'); ?>">Add Office</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
