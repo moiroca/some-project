@@ -5,7 +5,7 @@
 </div>
 <div class="row">
 	<div class="col-lg-12">
-    	<table class="table">
+    	<table class="table table-hover">
             <thead>
             <tr>
                 <th>Action</th>

@@ -61,7 +61,9 @@ $route['editOfficeSecretary']			= "administrator/editOfficeSecretary";
 $route['editOfficeSecretaryForm']			= "administrator/editOfficeSecretaryForm";
 $route['changeStatusOfficeSecretary']	= "administrator/changeStatusOfficeSecretary";
 
-
+$route['logout']			= "login/logout";
+$route['OfficeSecretary']			= "secretary";
+$route['createFolder']			= "secretary/createFolder";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

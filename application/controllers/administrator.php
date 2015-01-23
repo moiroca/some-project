@@ -6,6 +6,16 @@ class Administrator extends CI_Controller
 	{
 		parent::__construct();
 	}
+	public function dashboard()
+	{
+		if(!loginLibrary::isLoggedIn())
+			redirect("login");
+		
+		$data = array(
+			'content' => 'administrator/dashboard'
+		);
+		$this->load->view("template/content",$data);
+	}
 	// this will display the name of offices
 	public function office()
 	{

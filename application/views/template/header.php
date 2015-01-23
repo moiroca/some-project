@@ -16,6 +16,7 @@
     <link href=<?php echo base_url("public/css/sb-admin-2.css"); ?> rel="stylesheet">
     <!-- Custom Fonts -->
     <link href=<?php echo base_url("public/css/font-awesome.min.css"); ?> rel="stylesheet" type="text/css">
+	<?php customLoader::css(isset($css)?$css:array()); ?>
 </head>
 
 <body>
@@ -33,7 +34,7 @@
                 <a class="navbar-brand" href="index.html">LNU Archiving</a>
             </div>
             <!-- /.navbar-header -->
-
+			
             <ul class="nav navbar-top-links navbar-right">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -45,7 +46,7 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href=<?php echo base_url("logout"); ?>><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                 </li>
@@ -70,27 +71,25 @@
                         <li>
                             <a href="#"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
+						<?php if(loginLibrary::isLoggedInAdministrator()): ?>
 						<li >
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> User Management </a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="<?php echo base_url('officeHead'); ?>">Office Head Management</a>
-
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="<?php echo base_url('addOfficeHeadForm'); ?>">Add Office Head</a>
-                                        </li>
-                                    </ul>
-
+                                    <a href=<?php echo base_url("officeHead"); ?>>Office Head Management</a>
+									 <ul class="nav nav-third-level">
+										 <li>
+											<a href=<?php echo base_url("addOfficeHeadForm"); ?>>Add Office Head</a>
+										 </li>
+									 </ul>
                                 </li>
 								<li>
                                     <a href="officeSecretary">Office Secretary Management</a>
-
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="<?php echo base_url('addOfficeSecretaryForm'); ?>">Add Secretary</a>
-                                        </li>
-                                    </ul>
+									<ul class="nav nav-third-level">
+										 <li>
+											<a href="addOfficeSecretaryForm">Add Secretary</a>
+										 </li>
+									 </ul>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -99,9 +98,14 @@
                             <a href="<?php echo base_url('office'); ?>"><i class="fa fa-bar-chart-o fa-fw"></i> Office Management</a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="<?php echo base_url('addOfficeForm'); ?>">Add Office</a>
+                                    <a href="#">Add Office</a>
                                 </li>
                             </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+						<?php endif; ?>
+						<li >
+                            <a href="<?php echo base_url('createFolder'); ?>"><i class="fa fa-bar-chart-o fa-fw"></i> File Management</a>
                             <!-- /.nav-second-level -->
                         </li>
                      </ul>  
