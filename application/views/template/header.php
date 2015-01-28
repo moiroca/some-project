@@ -9,11 +9,13 @@
     <meta name="author" content="">
 
     <title>Archiving</title>
-
-    <!-- Bootstrap Core CSS -->
+   <!-- Bootstrap Core CSS -->
     <link href=<?php echo base_url("public/css/bootstrap.min.css"); ?> rel="stylesheet">
     <!-- Custom CSS -->
     <link href=<?php echo base_url("public/css/sb-admin-2.css"); ?> rel="stylesheet">
+    <link href=<?php echo base_url("public/css/file_upload.css"); ?> rel="stylesheet">
+    <link rel="stylesheet" href=<?php //echo base_url("public/css/smoothness/jquery-ui.css"); ?> >
+    <link rel="stylesheet" href=<?php //echo base_url("public/css/modalCSS.css"); ?> >
     <!-- Custom Fonts -->
     <link href=<?php echo base_url("public/css/font-awesome.min.css"); ?> rel="stylesheet" type="text/css">
 	<?php customLoader::css(isset($css)?$css:array()); ?>
@@ -84,10 +86,10 @@
 									 </ul>
                                 </li>
 								<li>
-                                    <a href="officeSecretary">Office Secretary Management</a>
+                                    <a href=<?php echo base_url("officeSecretary"); ?>>Office Secretary Management</a>
 									<ul class="nav nav-third-level">
 										 <li>
-											<a href="addOfficeSecretaryForm">Add Secretary</a>
+											<a href=<?php echo base_url("addOfficeSecretaryForm"); ?>>Add Secretary</a>
 										 </li>
 									 </ul>
                                 </li>
@@ -98,12 +100,22 @@
                             <a href="<?php echo base_url('office'); ?>"><i class="fa fa-bar-chart-o fa-fw"></i> Office Management</a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Add Office</a>
+                                    <a href=<?php echo base_url("addOfficeForm"); ?>>Add Office</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
 						<?php endif; ?>
+                        <?php if (loginLibrary::isLoggedInOfficeHead()): ?>
+                            <li>
+                                <a href=<?php echo base_url("officeSecretary"); ?>>Office Secretary Management</a>
+                                <ul class="nav nav-second-level">
+                                     <li>
+                                        <a href=<?php echo base_url("addOfficeSecretaryForm"); ?>>Add Secretary</a>
+                                     </li>
+                                 </ul>
+                            </li>
+                        <?php endif ?>
 						<li >
                             <a href="<?php echo base_url('createFolder'); ?>"><i class="fa fa-bar-chart-o fa-fw"></i> File Management</a>
                             <!-- /.nav-second-level -->

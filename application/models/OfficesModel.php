@@ -37,31 +37,50 @@ class OfficesModel extends CI_Model
 	// add new office head
 	public function addOfficeHead()
 	{
-		$data = array('office_id' => $this->input->post('office_id'),
-						'lastname' => $this->input->post('lastname'),
-						'firstname' => $this->input->post('firstname'),
-						'middlename' => $this->input->post('middlename'),
+
+		$DataUsers = array('last_name' => $this->input->post('lastname'),
+						'first_name' => $this->input->post('firstname'),
+						'middle_name' => $this->input->post('middlename'),
 						'username' => $this->input->post('lnu_id'),
-						'password' => sha1($this->input->post('lnu_id')),
-						'status' => $this->input->post('status'));
+						'role_id' => 2,
+						'status' => $this->input->post('status'),
+						'password' => md5($this->input->post('lnu_id')));
 	
-		return	$this->db->insert('office_heads', $data);
+		$this->db->trans_start();
+		
+		$this->db->insert('users', $DataUsers);
+		$userId = $this->db->insert_id();
+		$DataOfficeHead = array('office_id' => $this->input->post('office_id'),
+								'users_id' => $userId); 
+		$this->db->insert('office_heads', $DataOfficeHead);
+		
+		$this->db->trans_complete();
+
+		return $this->db->trans_status();
+
 	}
 	// edit office head
 	public function editOfficeHead()
 	{
-		$id = $this->input->post('officeHeadId');
-		$data = array('office_id' => $this->input->post('office_id'),
-						'lastname' => $this->input->post('lastname'),
-						'firstname' => $this->input->post('firstname'),
-						'middlename' => $this->input->post('middlename'),
+		$id = $this->input->post('usersId');
+		$data1 = array(	'last_name' => $this->input->post('lastname'),
+						'first_name' => $this->input->post('firstname'),
+						'middle_name' => $this->input->post('middlename'),
 						'username' => $this->input->post('lnu_id'),
-						'password' => sha1($this->input->post('lnu_id')),
+						'password' => md5($this->input->post('lnu_id')),
 						'status' => $this->input->post('status'));
-	
+		$data2 = array('office_id' => $this->input->post('office_id'));
+		$this->db->trans_start();
 		
 		$this->db->where('id',$id);
-		return	$this->db->update('office_heads', $data);
+		$this->db->update('users', $data1);
+		$this->db->where('users_id',$id);
+		$this->db->update('office_heads', $data2);
+		
+		$this->db->trans_complete();
+
+		return $this->db->trans_status();
+		
 	}
 	// change the current status of the office head
 	public function changeStatusOfficeHead()
@@ -75,48 +94,60 @@ class OfficesModel extends CI_Model
 		$data = array('status' => $status);
 		
 		$this->db->where('id',$id);
-		return	$this->db->update('office_heads', $data);
+		return	$this->db->update('users', $data);
 	}
 		// return the list of office heads
 	public function getOfficeHeads()
 	{
-		return $this->db->select('office_heads.id, office_heads.lastname, office_heads.firstname,office_heads.username, office_heads.middlename, office_heads.status,  offices.description, offices.id as officeId')
-							->from("office_heads")->join('offices', 'offices.id = office_heads.office_id')->get()->result();
+		return $this->db->select('users.id, users.last_name, users.first_name,users.username, users.middle_name, users.status,  offices.description, offices.id as officeId')
+							->from("office_heads")->join('offices', 'offices.id = office_heads.office_id')->join('users', 'users.id = office_heads.users_id')->get()->result();
 	}
 	// return the list of secretaries
 	public function getSecretaries()
 	{
-		return $this->db->select('secretaries.id,  secretaries.lastname, secretaries.firstname, secretaries.middlename, offices.description, secretaries.status, secretaries.username, , offices.id as officeId')
-							->from("secretaries")->join('offices', 'offices.id = secretaries.office_id')->order_by("offices.description", "asc")->get()->result();
+		return $this->db->select('users.id, users.last_name, users.first_name,users.username, users.middle_name, users.status,  offices.description, offices.id as officeId')
+							->from("secretaries")->join('offices', 'offices.id = secretaries.office_id')->join('users', 'users.id = secretaries.users_id')->get()->result();
 	}
 	//add new secretary
 	public function addOfficeSecretary()
-	{
-		$data = array('office_id' => $this->input->post('office_id'),
-						'lastname' => $this->input->post('lastname'),
-						'firstname' => $this->input->post('firstname'),
-						'middlename' => $this->input->post('middlename'),
+	{		
+		$DataUsers = array('last_name' => $this->input->post('lastname'),
+						'first_name' => $this->input->post('firstname'),
+						'middle_name' => $this->input->post('middlename'),
 						'username' => $this->input->post('lnu_id'),
-						'password' => sha1($this->input->post('lnu_id')),
-						'status' => $this->input->post('status'));
+						'role_id' => 3,
+						'status' => $this->input->post('status'),
+						'password' => md5($this->input->post('lnu_id')));
 	
-		return	$this->db->insert('secretaries', $data);
+		$this->db->trans_start();
+		
+		$this->db->insert('users', $DataUsers);
+		$userId = $this->db->insert_id();
+		$DataOfficeHead = array('office_id' => $this->input->post('office_id'),
+								'users_id' => $userId); 
+		$this->db->insert('secretaries', $DataOfficeHead);
+		
+		$this->db->trans_complete();
+
+		return $this->db->trans_status();
 	}
 	// edit office Secretary
 	public function editOfficeSecretary()
 	{
-		$id = $this->input->post('officeHeadId');
-		$data = array('office_id' => $this->input->post('office_id'),
-						'lastname' => $this->input->post('lastname'),
-						'firstname' => $this->input->post('firstname'),
-						'middlename' => $this->input->post('middlename'),
+		$id = $this->input->post('usersId');
+		$data1 = array(	'last_name' => $this->input->post('lastname'),
+						'first_name' => $this->input->post('firstname'),
+						'middle_name' => $this->input->post('middlename'),
 						'username' => $this->input->post('lnu_id'),
-						'password' => sha1($this->input->post('lnu_id')),
+						'password' => md5($this->input->post('lnu_id')),
 						'status' => $this->input->post('status'));
-	
+		$data2 = array('office_id' => $this->input->post('office_id'));
+		$this->db->trans_start();
 		
 		$this->db->where('id',$id);
-		return	$this->db->update('secretaries', $data);
+		$this->db->update('users', $data1);
+		$this->db->where('users_id',$id);
+		$this->db->update('secretaries', $data2);
 	}
 	// change the current status of the office secretary
 	public function changeStatusOfficeSecretary()
@@ -130,6 +161,6 @@ class OfficesModel extends CI_Model
 		$data = array('status' => $status);
 		
 		$this->db->where('id',$id);
-		return	$this->db->update('secretaries', $data);
+		return	$this->db->update('users', $data);
 	}
 }

@@ -134,7 +134,7 @@ class Administrator extends CI_Controller
 			$this->form_validation->set_rules('firstname', 'Firstname', 'required|max_length[50]|xss_clean');
 			$this->form_validation->set_rules('lastname', 'Lastname', 'required|max_length[50]|xss_clean');
 			$this->form_validation->set_rules('middlename', 'Middlename', 'required|max_length[50]|xss_clean');
-			$this->form_validation->set_rules('lnu_id', 'LNU ID', 'required|max_length[50]|is_unique[office_heads.username]');
+			$this->form_validation->set_rules('lnu_id', 'LNU ID', 'required|max_length[50]|is_unique[users.username]');
 			$this->form_validation->set_rules('status', 'Status', 'required');
 
 			if ($this->form_validation->run() == FALSE){
@@ -260,7 +260,7 @@ class Administrator extends CI_Controller
 			$this->form_validation->set_rules('firstname', 'Firstname', 'required|max_length[50]|xss_clean');
 			$this->form_validation->set_rules('lastname', 'Lastname', 'required|max_length[50]|xss_clean');
 			$this->form_validation->set_rules('middlename', 'Middlename', 'required|max_length[50]|xss_clean');
-			$this->form_validation->set_rules('lnu_id', 'LNU ID', 'required|max_length[50]|xss_clean|is_unique[secretaries.username]');
+			$this->form_validation->set_rules('lnu_id', 'LNU ID', 'required|max_length[50]|xss_clean|is_unique[users.username]');
 			$this->form_validation->set_rules('status', 'Status', 'required|');
 
 			if ($this->form_validation->run() == FALSE){

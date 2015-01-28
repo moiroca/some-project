@@ -18,6 +18,7 @@
                 	<tr>
                         <td>
                         	<a onclick="editOffice(<?php echo $values->id; ?>,'<?php echo $values->description;?>')" href="#"> Edit </a>
+                            |
                             <a onclick="deleteConfirm(<?php echo $values->id; ?>)" href="#"> Delete </a>
                         </td>
                         <td><?php echo $values->description; ?></td>
