@@ -1,4 +1,4 @@
-
+    <link href=<?php echo base_url("public/css/file_upload.css"); ?> rel="stylesheet">
 	<div class="row" style="padding-top:20px;">
     	<div class="col-lg-12">
 		
@@ -46,7 +46,7 @@
 			  <?php if(!empty($files)): ?>
 					<ul>
 					<?php foreach($files as $key => $values): ?>
-						<li><?php echo $values->name." - ".$values->file_type." "; ?></li>
+						<li><?php echo $values->last_name.", ".$values->first_name." ".$values->last_name."-".$values->name; ?></li>
 					<?php endforeach; ?>
 					</ul>
 				<?php else: ?>
@@ -67,18 +67,26 @@
       <div class="modal-body">
        <div id="maindiv">
 		<div id="formdiv">
-		<form enctype="multipart/form-data" action="<?php echo base_url('fileUpload'); ?>" method="post" class="fileUploadForm">
-		
-		<center><div id="filediv"><input name="file[]" type="file" id="file"/></div></center>
-		<input type="button" id="add_more" class="upload" value="Add More Files"/>
-		<input type="submit" value="Upload File" name="submit" id="upload" class="upload"/>
-		</form>
-		
+			<form enctype="multipart/form-data" action="<?php echo base_url('fileUpload'); ?>" method="post" class="fileUploadForm">
+				<input type="hidden" name="folderId" value="<?php echo $this->input->get('folder_id'); ?>">
+				<?php if(!empty($users)): ?>
+					<select name="user_id">
+						<option value="">----- Select Employee ------</option>
+						<?php foreach($users as $key => $values): ?>
+							<option value="<?php echo $values->id ?>" ><?php echo $values->last_name.", ".$values->first_name." ".$values->middle_name; ?></option>
+						<?php endforeach; ?>
+					</select>
+				<?php else: ?>
+				<?php endif; ?>
+				<center><div id="filediv"><input name="file[]" type="file" id="file"/></div></center>
+				<input type="button" id="add_more" class="upload" value="Add More Files"/>
+				<input type="submit" value="Upload File" name="submit" id="upload" class="upload"/>
+			</form>
 		</div>
 		</div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->	
       </div>
     </div>
   </div>

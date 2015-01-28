@@ -13,7 +13,7 @@
     <link href=<?php echo base_url("public/css/bootstrap.min.css"); ?> rel="stylesheet">
     <!-- Custom CSS -->
     <link href=<?php echo base_url("public/css/sb-admin-2.css"); ?> rel="stylesheet">
-    <link href=<?php echo base_url("public/css/file_upload.css"); ?> rel="stylesheet">
+    <link href=<?php //echo base_url("public/css/file_upload.css"); ?> rel="stylesheet">
     <link rel="stylesheet" href=<?php //echo base_url("public/css/smoothness/jquery-ui.css"); ?> >
     <link rel="stylesheet" href=<?php //echo base_url("public/css/modalCSS.css"); ?> >
     <!-- Custom Fonts -->

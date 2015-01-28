@@ -102,6 +102,12 @@ class OfficesModel extends CI_Model
 		return $this->db->select('users.id, users.last_name, users.first_name,users.username, users.middle_name, users.status,  offices.description, offices.id as officeId')
 							->from("office_heads")->join('offices', 'offices.id = office_heads.office_id')->join('users', 'users.id = office_heads.users_id')->get()->result();
 	}
+	//return the list of users
+	public function getUsers()
+	{
+		return $this->db->select('id, last_name,first_name, middle_name')
+							->from('users')->get()->result();
+	}
 	// return the list of secretaries
 	public function getSecretaries()
 	{
