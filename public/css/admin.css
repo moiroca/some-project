@@ -1,0 +1,18 @@
+/*admin css*/
+
+.folders{
+	margin-left:20px;
+}
+.delete{
+	visibility:hidden;
+}
+.folders:hover .delete
+{
+	visibility:visible;
+	width:20px;
+	height:20px;
+	position:relative;
+	left:40px;
+	float:left;
+	top:-90px;
+}

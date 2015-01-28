@@ -54,8 +54,7 @@ class Secretary extends CI_Controller
 			'files'	=> $files,
 			'users'	=> $this->OfficesModel->getUsers(),
 			'js' => array('foldering','bootbox.min'),
-			'css' => array('file_upload'),
-			'css' => array('foldering'),
+			'css' => array('file_upload','foldering','admin'),
 			'content'	=> 'secretary/createFolder'
 		);
 		

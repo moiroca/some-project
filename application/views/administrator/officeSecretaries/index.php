@@ -1,36 +1,37 @@
 <div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">Secretaries</h1>
+    <div class="col-lg-12" style="margin-top:20px;">
+        <div class="panel panel-primary">
+			<div class="panel-heading">
+				 <h1 class="panel-title">Secretaries</h1>
+			</div>
+			<div class="panel-body">
+				<table class="table table-condensed table-hover table-striped table-bordered">
+					<thead>
+					<tr>
+						<th>Action</th>
+						<th>Office</th>
+						<th>Name of Secretary</th>
+					</tr>
+					</thead>
+					<tbody>
+					<?php if($officeSecretaries): ?>
+						<?php foreach($officeSecretaries as $key => $values): ?>
+							<tr>
+								<td>
+									<a class="btn btn-info btn-xs"  href="<?php echo base_url('editOfficeSecretaryForm/'.$values->id) ?>"> <i class="fa fa-edit"></i>  Edit</a>
+									|
+									<a class="btn <?php if($values->status!=1){ echo "btn-primary";}else{ echo "btn-danger"; } ?>  btn-xs"  href="changeStatusOfficeSecretary?id=<?php echo $values->id; ?>&status=<?php echo $values->status; ?>"> <i class="fa fa-save"></i> <?php if($values->status!=1){ echo "Activate";}else{ echo "Deactivate"; } ?> </a>
+								</td>
+								<td><?php echo $values->description; ?></td>
+								<td><?php echo $values->last_name; ?>, <?php echo $values->first_name; ?>&nbsp;<?php echo $values->middle_name; ?></td>
+							</tr>
+						<?php endforeach; ?>
+					<?php else: ?>
+					<?php endif; ?>
+					</tbody>
+				</table>
+			</div>
+		</div>
     </div>
 </div>
-<div class="row">
-    <div class="col-lg-12">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Action</th>
-                <th>Office</th>
-                <th>Name of Secretary</th>
-                <th>Status</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php if($officeSecretaries): ?>
-                <?php foreach($officeSecretaries as $key => $values): ?>
-                    <tr>
-                        <td>
-                            <a href="editOfficeSecretaryForm?id=<?php echo $values->id; ?>&description=<?php echo $values->description;?>&officeId=<?php echo $values->officeId;?>&lastname=<?php echo $values->last_name;?>&firstname=<?php echo $values->first_name;?>&middlename=<?php echo $values->middle_name;?>&lnu_id=<?php echo $values->username;?>&status=<?php echo $values->status;?>"> Edit</a>
-                            |
-                            <a href="changeStatusOfficeSecretary?id=<?php echo $values->id; ?>&status=<?php echo $values->status; ?>"> <?php if($values->status!=1){ echo "Activate";}else{ echo "Deactivate"; } ?> </a>
-                        </td>
-                        <td><?php echo $values->description; ?></td>
-                        <td><?php echo $values->last_name; ?>, <?php echo $values->first_name; ?>&nbsp;<?php echo $values->middle_name; ?></td>
-                        <td><?php $retval = ($values->status==1)? "Active" : "Deactivated"; echo $retval; ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-            <?php endif; ?>
-            </tbody>
-        </table>
-    </div>
-</div>
+

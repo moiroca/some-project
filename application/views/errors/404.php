@@ -6,7 +6,7 @@
 #container
 {
 	width:500px;
-	margin:20px auto;
+	margin:100px auto;
 }
 </style>
 </head>

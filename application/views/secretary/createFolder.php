@@ -17,13 +17,15 @@
 			  </div>
 			  <div class="panel-body">
 				<?php if(!empty($folders)):?>
-					<div class="folders">
+					<div id="folders">
 						<?php foreach($folders as $key => $values): ?>
-						<div class="pull-left" style="margin-left:20px;">
+						<div class="pull-left folders" style="margin-left:20px;">
 							<a title="<?php echo $values->name; ?>" href=<?php echo base_url("secretary/createFolder?folder_id=".$values->id);?>>
 								<li class="fa fa-folder fa-4x"></li>
-								<p><?php echo $values->name;?></p>
+								<p title="<?php echo $values->name; ?>"><?php echo substr($values->name,0,10)."...";?></p>
 							</a>
+							<span onclick="return deleteFolder(<?php echo $values->id; ?>)" class="delete"><i class="fa fa-trash fa-2x"></i></span>
+							
 						</div>
 					<?php endforeach; ?>
 					</div>
