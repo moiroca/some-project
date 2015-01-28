@@ -113,9 +113,11 @@ class Administrator extends CI_Controller
 		$data = array(
 			'content' => 'administrator/officeHeads/index',
 			'officeHeads' => $this->OfficesModel->getOfficeHeads(),
+			'css' => array('foldering','admin'),
 			'js'	  => array(
 				'bootbox.min',
-				'administrator/main'
+				'administrator/main',
+				'foldering'
 			)
 		);
 		$this->load->view('template/content',$data);
@@ -162,7 +164,13 @@ class Administrator extends CI_Controller
 
 		$data = array(
 			'content' => 'administrator/officeHeads/addOfficeHead',
-			'offices' => $this->OfficesModel->getOffices()
+			'offices' => $this->OfficesModel->getOffices(),
+			'css' => array('foldering','admin'),
+			'js'	  => array(
+				'bootbox.min',
+				'administrator/main',
+				'foldering',
+			)
 			);
 		$this->load->view('template/content',$data);
 	}
@@ -181,6 +189,7 @@ class Administrator extends CI_Controller
 			$this->form_validation->set_rules('middlename', 'Middlename', 'required|max_length[50]|xss_clean');
 			$this->form_validation->set_rules('lnu_id', 'LNU ID', 'required|max_length[50]');
 			$this->form_validation->set_rules('status', 'Status', 'required');
+			$this->form_validation->set_rules('usersId', 'User', 'required|integer');
 
 			if ($this->form_validation->run() == FALSE){
 				$data = array(
@@ -207,11 +216,24 @@ class Administrator extends CI_Controller
 	// display the form for editing office head
 	public function editOfficeHeadForm()
 	{
+		
 		$this->load->model("OfficesModel");
+		$this->load->model("UserModel");
+		
+		$user_id = $this->uri->segment(2);
+		$officeHead = $this->UserModel->getOfficeHeadById($user_id);
+		
+		if(empty($officeHead))
+		{
+			show_404();
+			exit;
+		}
 		$data = array(
 			'content' => 'administrator/officeHeads/editOfficeHead',
-			'offices' => $this->OfficesModel->getOffices()
+			'offices' => $this->OfficesModel->getOffices(),
+			'officeHead' => $officeHead
 			);
+			
 		$this->load->view('template/content',$data);
 	}
 	// This will change the current status of the unit head
@@ -344,11 +366,38 @@ class Administrator extends CI_Controller
 	public function editOfficeSecretaryForm()
 	{
 		$this->load->model("OfficesModel");
+		$this->load->model("UserModel");
+		$user_id = $this->uri->segment(2);
+		$secretary = $this->UserModel->getOfficeSecretaryById($user_id);
+		
+		if(empty($secretary))
+		{
+			show_404();
+			exit;
+		}
 		$data = array(
 			'content' => 'administrator/officeSecretaries/editOfficeSecretary',
-			'offices' => $this->OfficesModel->getOffices()
+			'offices' => $this->OfficesModel->getOffices(),
+			'secretary' => $secretary
 			);
 		$this->load->view('template/content',$data);
+	}
+	public function error()
+	{
+		$this->load->view("errors/404");
+	}
+	public function deleteFolder()
+	{
+		$this->load->library("Request");
+		if(Request::isAjax())
+		{
+			$this->load->model("foldersModel");
+			$delete = $this->foldersModel->deleteFolder();
+			
+			echo $delete;
+		}
+		else
+			show_404();
 	}
 
 }

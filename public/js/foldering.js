@@ -9,7 +9,8 @@ function saveFolder(id)
 				url: base_url+"secretary/saveFolder",
 				data: {name:result,folder_id:id},
 				success: function(result){
-					bootbox.alert("Folder Created!");
+					var con = bootbox.alert("Folder Created!");
+					window.location.href=base_url+"createFolder";
 				}
 			});
 		}
@@ -40,6 +41,7 @@ function saveFile(id)
 				data: {name:result,folder_id:id},
 				success: function(result){
 					bootbox.alert("Folder Created!");
+					
 				}
 			});
 		}
@@ -57,4 +59,30 @@ function saveFile(id)
 			});
 		}
 	});	
+}
+
+$(document).ready(function()
+{
+	$(".delete").on("click",function($this)
+	{
+		//alert($this);
+	});
+});
+function deleteFolder($folder_id)
+{
+	bootbox.confirm("Are you sure you want to delete this folder?", function(result) {
+	  if(result)
+	  {
+		  $.ajax({
+				type: "POST",
+				url: base_url+"administrator/deleteFolder",
+				data: {folder_id:$folder_id},
+				success: function(result){
+					console.log(result);
+					//bootbox.alert("Folder Deleted");
+				}
+			});
+	  }
+	}); 
+	return false;
 }

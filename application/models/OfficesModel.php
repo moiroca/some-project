@@ -69,15 +69,15 @@ class OfficesModel extends CI_Model
 						'username' => $this->input->post('lnu_id'),
 						'password' => md5($this->input->post('lnu_id')),
 						'status' => $this->input->post('status'));
+						
 		$data2 = array('office_id' => $this->input->post('office_id'));
-		$this->db->trans_start();
 		
 		$this->db->where('id',$id);
 		$this->db->update('users', $data1);
+		
 		$this->db->where('users_id',$id);
 		$this->db->update('office_heads', $data2);
 		
-		$this->db->trans_complete();
 
 		return $this->db->trans_status();
 		

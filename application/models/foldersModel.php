@@ -102,4 +102,18 @@ class foldersModel extends CI_Model
 			//echo json_encode($data);
 			return $this->db->insert('folders',$data);
 	}
+	//delete folder with files inside the folder
+	public function deleteFolder()
+	{
+		$folder_id = $this->input->post("folder_id");
+		
+		$this->db->where("folder_id",$folder_id);
+		$this->db->delete("files");
+		
+		$this->db->where("parent_id",$folder_id);
+		$this->db->delete("folders");
+		
+		$this->db->where("id",$folder_id);
+		$this->db->delete("folders");
+	}
 }

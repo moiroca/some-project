@@ -46,9 +46,9 @@ class Secretary extends CI_Controller
 			'folders' => $folders,
 			'breadCrumbs' => $parent_folder_id,
 			'files'	=> $files,
-			'js' => array('foldering','bootbox.min'),
-			'css' => array('foldering'),
-			'content'	=> 'secretary/createFolder'
+			'js' => array('foldering','bootbox.min','bootstrap-toggle.min'),
+			'css' => array('foldering','admin','bootstrap-toggle.min'),
+			'content'	=> 'secretary/createFolder',
 		);
 		
 		$this->load->view("template/content",$data);

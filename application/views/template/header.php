@@ -14,8 +14,6 @@
     <!-- Custom CSS -->
     <link href=<?php echo base_url("public/css/sb-admin-2.css"); ?> rel="stylesheet">
     <link href=<?php echo base_url("public/css/file_upload.css"); ?> rel="stylesheet">
-    <link rel="stylesheet" href=<?php //echo base_url("public/css/smoothness/jquery-ui.css"); ?> >
-    <link rel="stylesheet" href=<?php //echo base_url("public/css/modalCSS.css"); ?> >
     <!-- Custom Fonts -->
     <link href=<?php echo base_url("public/css/font-awesome.min.css"); ?> rel="stylesheet" type="text/css">
 	<?php customLoader::css(isset($css)?$css:array()); ?>
@@ -33,7 +31,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">LNU Archiving</a>
+                <a class="navbar-brand" href="<?php echo base_url(); ?>"><i class="fa fa-file-archive-o fa-1x"></i> LNU Archiving</a>
             </div>
             <!-- /.navbar-header -->
 			
@@ -59,26 +57,15 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                            </div>
-                            <!-- /input-group -->
-                        </li>
                         <li>
-                            <a href="#"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a href="<?php echo base_url(); ?>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
 						<?php if(loginLibrary::isLoggedInAdministrator()): ?>
 						<li >
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> User Management </a>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-users"></i> User Management </a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href=<?php echo base_url("officeHead"); ?>>Office Head Management</a>
+                                    <a href=<?php echo base_url("officeHead"); ?>><i class="fa fa-user"></i> Office Head Management</a>
 									 <ul class="nav nav-third-level">
 										 <li>
 											<a href=<?php echo base_url("addOfficeHeadForm"); ?>>Add Office Head</a>
@@ -86,10 +73,10 @@
 									 </ul>
                                 </li>
 								<li>
-                                    <a href=<?php echo base_url("officeSecretary"); ?>>Office Secretary Management</a>
+                                    <a href=<?php echo base_url("officeSecretary"); ?>><i class="fa fa-user"></i> Secretary Management</a>
 									<ul class="nav nav-third-level">
 										 <li>
-											<a href=<?php echo base_url("addOfficeSecretaryForm"); ?>>Add Secretary</a>
+											<a href="<?php echo base_url("addOfficeSecretaryForm"); ?>"><i class="fa fa-user-times"></i> Add Secretary</a>
 										 </li>
 									 </ul>
                                 </li>
@@ -97,7 +84,7 @@
                             <!-- /.nav-second-level -->
                         </li>
 						<li >
-                            <a href="<?php echo base_url('office'); ?>"><i class="fa fa-bar-chart-o fa-fw"></i> Office Management</a>
+                            <a href="<?php echo base_url('office'); ?>"><i class="fa fa-building"></i> Office Management</a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href=<?php echo base_url("addOfficeForm"); ?>>Add Office</a>
@@ -117,7 +104,7 @@
                             </li>
                         <?php endif ?>
 						<li >
-                            <a href="<?php echo base_url('createFolder'); ?>"><i class="fa fa-bar-chart-o fa-fw"></i> File Management</a>
+                            <a href="<?php echo base_url('createFolder'); ?>"><i class="fa fa-file"></i> File Management</a>
                             <!-- /.nav-second-level -->
                         </li>
                      </ul>  

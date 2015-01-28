@@ -12,9 +12,3 @@ function editOffice(id, description)
 			window.location.href = base_url+"editOffice?id="+id+"&description="+result;
 	});
 }
-
-$(document).ready(function(e) {
-   
-});
-
-

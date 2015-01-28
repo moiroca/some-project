@@ -18,7 +18,7 @@ class customLoader
 		{
 			foreach($params as $key => $values)
 			{
-				echo "<link type='text/css'	rel='stylsheet'	href='".base_url("public/css/")."/".$values.".css'></script>";
+				echo "<link type='text/css'	rel='stylesheet'	href='".base_url("public/css/")."/".$values.".css'></script>";
 			}
 		}
 	}
