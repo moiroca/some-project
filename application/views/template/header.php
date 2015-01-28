@@ -102,10 +102,13 @@
                                  </ul>
                             </li>
                         <?php endif ?>
-						<li >
+                        <?php if (!loginLibrary::isLoggedInAdministrator()) { ?>
+                            
+                        <li >
                             <a href="<?php echo base_url('createFolder'); ?>"><i class="fa fa-file"></i> File Management</a>
                             <!-- /.nav-second-level -->
                         </li>
+                        <?php } ?>
                      </ul>  
                 </div>
                 <!-- /.sidebar-collapse -->

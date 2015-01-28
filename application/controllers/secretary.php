@@ -42,7 +42,7 @@ class Secretary extends CI_Controller
 		
 		$office_id_array = $this->filesModel->getOfficeByUserId(loginLibrary::loggedInUser()['user_id'], loginLibrary::loggedInUser()['user_role']);
 		$office_id = 0;
-			foreach ($office_id_array as $key => $value) {
+		foreach ($office_id_array as $key => $value) {
 				$office_id = $value->office_id;
 		}
 		$files = $this->filesModel->getFilesByFolderId($parent_folder_id,$office_id);
