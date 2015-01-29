@@ -19,48 +19,58 @@
 
     <!-- Custom Fonts -->
     <link href=<?php echo base_url("public/css/font-awesome.min.css"); ?>  rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+	<style type="text/css">
+		.container{
+			margin:100px auto;
+		}
+		.panel{
+			margin:auto;
+			margin-left:auto;
+		}
+	</style>
 </head>
 
 <body>
 
     <div class="container">
         <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <div class="login-panel panel panel-default">
+			  <div class="col-lg-2">
+			</div>
+            <div class="col-lg-8">
+                <div class="login-panel panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">Please Sign In</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form" method="post" action="<?php echo base_url("login/userLogin"); ?>">
-                            <fieldset>
-                            	<div class="form-group">
-									<?php echo ($this->input->get("retryLogin") == "true")?"<div class='alert alert-success'><i class='fa fa-check'></i> Login With Your New Credentials!</div>":""; ?>
-                                	<?php echo validation_errors(); ?>
-                                    <?php if(isset($usernotfound)):?>
-                                    	<div class="alert alert-danger"><i class="fa fa-warning"></i> User Not Found!</div>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Username" name="username" type="text" autofocus>
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password">
-                                </div>
-                                <!-- Change this to a button or input when using this as a form -->
-                                <input type="submit" class="btn btn-mini btn-success btn-block" value="Login">
-                            </fieldset>
-                        </form>
+						 <div class="col-lg-4">
+							<img style="width:200px; height:200px;" src="<?php echo base_url('public/img/loupe-pc-bd.jpg'); ?>" />
+						</div>
+						 <div class="col-lg-8">
+							 <form role="form" method="post" action="<?php echo base_url("login/userLogin"); ?>">
+								<fieldset>
+									<div class="form-group">
+										<?php echo ($this->input->get("retryLogin") == "true")?"<div class='alert alert-success'><i class='fa fa-check'></i> Login With Your New Credentials!</div>":""; ?>
+										<?php echo validation_errors(); ?>
+										<?php if(isset($usernotfound)):?>
+											<div class="alert alert-danger"><i class="fa fa-warning"></i> User Not Found!</div>
+										<?php endif; ?>
+									</div>
+									<div class="form-group">
+											<input class="form-control" placeholder="Username" name="username" type="text" autofocus />
+									</div>
+									<div class="form-group">
+											<input class="form-control" placeholder="Password" name="password" type="password">
+									</div>
+									<!-- Change this to a button or input when using this as a form -->
+									<button type="submit" class="btn btn-mini btn-success btn-block"><i class="fa fa-unlock"></i> Login</button>
+								</fieldset>
+							</form>
+						</div>
                     </div>
                 </div>
             </div>
+			<div class="col-lg-2">
+			</div>
         </div>
     </div>
 

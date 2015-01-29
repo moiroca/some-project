@@ -29,19 +29,22 @@ class Secretary extends CI_Controller
 		$this->load->library('breadcrumbs');
 		$parent_folder_id = (int)$this->input->get("folder_id");
 		
-		if(!empty($parent_folder_id) && !$this->foldersModel->isFolderExistById($parent_folder_id,loginLibrary::loggedInUser()['user_id']))
+		$this->load->model("foldersModel");
+		$isExist = $this->foldersModel->isFolderExistById($parent_folder_id,loginLibrary::loggedInUser()['user_id']);
+		if(!empty($parent_folder_id) && !$isExist)
 		{
 			show_404();
 			return false;
 		}
-		$this->load->model("foldersModel");
 		$this->load->model("OfficesModel");
 		if($parent_folder_id != 0)
 			$folders = $this->foldersModel->getChildFolderById((int)$parent_folder_id,loginLibrary::loggedInUser()['user_id']);
 		else
 			$folders = $this->foldersModel->getRootFoldersByUserId(loginLibrary::loggedInUser()['user_id']);
 		
+		
 		$office_id_array = $this->filesModel->getOfficeByUserId(loginLibrary::loggedInUser()['user_id'], loginLibrary::loggedInUser()['user_role']);
+		
 		
 		$files = $this->filesModel->getFilesByFolderId($parent_folder_id, $office_id_array[0]->office_id);
 		

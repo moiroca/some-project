@@ -24,13 +24,8 @@
 								<li class="fa fa-folder fa-4x"></li>
 								<p title="<?php echo $values->name; ?>"><?php echo substr($values->name,0,10)."...";?></p>
 							</a>
-<<<<<<< HEAD
-							<span onclick="return deleteFolder(<?php echo $values->id; ?>)" class="delete"><i class="fa fa-trash fa-2x"></i></span>
-							<span onclick="return editFolder(<?php echo $values->id; ?>,$(this))" class="edit"><i class="fa fa-edit fa-2x"></i></span>
-=======
 							<span onclick="return deleteFolder(<?php echo $values->id; ?>,<?php echo ($this->input->Get("folder_id")?$this->input->Get("folder_id"):0);?>)" class="delete"><i class="fa fa-trash fa-2x"></i></span>
-							
->>>>>>> 49b2599a0e1ce36f47076ce30fb6a9171af7d35b
+							<span onclick="return editFolder(<?php echo $values->id; ?>,$(this))" class="edit"><i class="fa fa-edit fa-2x"></i></span>
 						</div>
 					<?php endforeach; ?>
 					</div>

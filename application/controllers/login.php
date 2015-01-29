@@ -39,7 +39,7 @@ class login extends CI_Controller
 				
 				$user = $this->UserModel->getUser($username,$password);
 						
-				if(!empty($user))
+				if(!empty($user) && $user[0]->status != 0 )
 				{
 					loginLibrary::startSession();
 					loginLibrary::setter($user);				
