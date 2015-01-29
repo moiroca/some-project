@@ -33,8 +33,7 @@ class Secretary extends CI_Controller
 
 		if(!empty($parent_folder_id) && !$this->foldersModel->isFolderExistById($parent_folder_id,loginLibrary::loggedInUser()['user_id']))
 
-		$isExist = $this->foldersModel->isFolderExistById($parent_folder_id,loginLibrary::loggedInUser()['user_id']);
-		if(!empty($parent_folder_id) && !$isExist)
+		if(!empty($parent_folder_id) && !$this->foldersModel->isFolderExistById($parent_folder_id,loginLibrary::loggedInUser()['user_id']))
 		{
 			show_404();
 			return false;
