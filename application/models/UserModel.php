@@ -19,7 +19,7 @@ class UserModel extends CI_Model
 	{
 		
 		$this->db->where("users.id",$user_id);
-		$user = $this->db->select("users.first_name,users.id as id, users.last_name,users.middle_name, users.username,users.status")->from("users")
+		$user = $this->db->select("users.first_name,roles.name,users.id as id, users.last_name,users.middle_name, users.username,users.status")->from("users")
 						 ->join("roles","roles.id = users.role_id","inner")->get()->result();
 		return $user;
 	}
