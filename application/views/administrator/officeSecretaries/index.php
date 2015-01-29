@@ -27,6 +27,9 @@
 							</tr>
 						<?php endforeach; ?>
 					<?php else: ?>
+							<tr>
+								<td colspan=3><div class='alert alert-info'><i class="fa fa-info"></i> No Office Secretary Found!</div></td>
+							</tr>
 					<?php endif; ?>
 					</tbody>
 				</table>

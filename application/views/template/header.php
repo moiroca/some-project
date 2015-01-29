@@ -37,12 +37,10 @@
             <ul class="nav navbar-top-links navbar-right">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user fa-fw"></i>  <?php echo loginLibrary::loggedInUser()['name']; ?> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        <li><a href="<?php echo base_url('profile/'.loginLibrary::loggedInUser()['user_id']); ?>"><i class="fa fa-user fa-fw"></i> User Profile</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href=<?php echo base_url("logout"); ?>><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -56,7 +54,7 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <li>
+                        <li class="active">
                             <a href="<?php echo base_url(); ?>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
 						<?php if(loginLibrary::isLoggedInAdministrator()): ?>
@@ -82,7 +80,7 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-						<li >
+						<li>
                             <a href="<?php echo base_url('office'); ?>"><i class="fa fa-building"></i> Office Management</a>
                             <ul class="nav nav-second-level">
                                 <li>

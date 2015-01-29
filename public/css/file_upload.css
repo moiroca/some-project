@@ -1,7 +1,7 @@
 @import "http://fonts.googleapis.com/css?family=Droid+Sans";
 .fileUploadForm{
 background-color:#fff;
-width: 100%;
+width: 80%;
 }
 #maindiv{
 width:100%;
@@ -68,7 +68,8 @@ margin-left:-20px;
 margin-bottom:91px
 }
 .abcd{
-text-align:center
+text-align:center;
+margin-left:12px;
 }
 .abcd img{
 height:100px;

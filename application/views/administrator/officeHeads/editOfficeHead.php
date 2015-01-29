@@ -1,10 +1,11 @@
 
 <div class="row">
-  <div class="col-lg-12">
+  <div class="col-lg-12" style="margin-top:20px;">
      <!-- new form  -->
 	<div class="panel panel-primary">
-		<div class="panel-heading">
-			<h1 class="panel-title">Dashboard</h1>
+		<div class="panel-heading clearfix">
+			<a href=<?php echo base_url("edit-office-head-password/".$officeHead[0]->user_id); ?> class="btn btn-warning btn-xs pull-right"><i class="fa fa-lock"></i> Edit Office Head Password</a>
+			<h1 class="panel-title"><i class="fa fa-edit"></i> Edit Office Head Personal Information</h1>
 		</div>
 		<div class="panel-body">
 			<form method="POST" action="<?php echo base_url('editOfficeHead'); ?>">
