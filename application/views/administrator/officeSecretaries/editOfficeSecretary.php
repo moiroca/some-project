@@ -4,7 +4,8 @@
      <!-- new form  -->
 	<div class="panel panel-primary">
 		<div class="panel-heading">
-			<h1 class="panel-title">Dashboard</h1>
+			<a href=<?php echo base_url("edit-office-secretary-password/".$secretary[0]->user_id); ?> class="btn btn-warning btn-xs pull-right"><i class="fa fa-lock"></i> Edit Office Secretary Password</a>
+			<h1 class="panel-title"><i class="fa fa-edit"></i> Edit Office Secretary </h1>
 		</div>
 		<div class="panel-body">
 			<form method="POST" action="<?php echo base_url('editOfficeSecretary'); ?>">

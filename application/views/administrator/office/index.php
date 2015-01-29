@@ -14,7 +14,7 @@
 					</tr>
 					</thead>
 					<tbody>
-					<?php if($offices): ?>
+					<?php if(!empty($offices)): ?>
 						<?php foreach($offices as $key => $values): ?>
 							<tr>
 								<td>
@@ -26,6 +26,9 @@
 							</tr>
 						<?php endforeach; ?>
 					<?php else: ?>
+						<tr>
+							<td colspan=2><div class='alert alert-info'><i class="fa fa-info"></i> No Office Found!</div></td>
+						</tr>
 					<?php endif; ?>
 					</tbody>
 				</table>

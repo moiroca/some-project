@@ -24,8 +24,6 @@ class Secretary extends CI_Controller
 		
 		
 		
-		$this->load->model("foldersModel");
-		$this->load->model("OfficesModel");
 		$this->load->model("filesModel");
 		$this->load->library('breadcrumbs');
 		$parent_folder_id = (int)$this->input->get("folder_id");
@@ -35,17 +33,16 @@ class Secretary extends CI_Controller
 			show_404();
 			return false;
 		}
+		$this->load->model("foldersModel");
+		$this->load->model("OfficesModel");
 		if($parent_folder_id != 0)
 			$folders = $this->foldersModel->getChildFolderById((int)$parent_folder_id,loginLibrary::loggedInUser()['user_id']);
 		else
 			$folders = $this->foldersModel->getRootFoldersByUserId(loginLibrary::loggedInUser()['user_id']);
 		
 		$office_id_array = $this->filesModel->getOfficeByUserId(loginLibrary::loggedInUser()['user_id'], loginLibrary::loggedInUser()['user_role']);
-		$office_id = 0;
-		foreach ($office_id_array as $key => $value) {
-				$office_id = $value->office_id;
-		}
-		$files = $this->filesModel->getFilesByFolderId($parent_folder_id,$office_id);
+		
+		$files = $this->filesModel->getFilesByFolderId($parent_folder_id, $office_id_array[0]->office_id);
 		
 		
 		$data = array(
@@ -87,8 +84,18 @@ class Secretary extends CI_Controller
 	public function fileUpload(){
 		if(!loginLibrary::isLoggedIn())
 			redirect("login");
-		if(isset($_POST['submit'])) {
+
+			$user_id = 0;
 			$this->load->model('filesModel');
+			$this->load->library('form_validation');
+
+			$this->form_validation->set_rules('user_id', 'Employee', 'required');
+			if ($this->form_validation->run() == FALSE){
+				redirect('createFolder');
+			}else{
+				$user_id = $this->input->post('user_id');
+			}
+			
 
 			$j = 0;     // Variable for indexing uploaded image.
 			$target_path = 'public/documents/'; // Declaring Path for uploaded images.
@@ -100,15 +107,16 @@ class Secretary extends CI_Controller
 			foreach ($office_id_array as $key => $value) {
 				$office_id = $value->office_id;
 			}
-			$user_id = $this->input->post('user_id');
+
 			for ($i = 0; $i < count($_FILES['file']['name']); $i++) {
+				echo $_FILES['file']['name'][$i];
 				// Loop to get individual element from the array
 				$validextensions = array("jpeg", "jpg", "png", "pdf", "ppt", "pptx", "doc", "docx", "xls");      // Extensions which are allowed.
 				$ext = explode('.', basename($_FILES['file']['name'][$i]));   // Explode file name from dot(.)
 				$file_extension = end($ext); // Store extensions in the variable.
 				$target_path = $target_path . md5(uniqid()) . "." . $ext[count($ext) - 1];     // Set the target path with a new name of image.
 				$j = $j + 1;      // Increment the number of uploaded images according to the files in array.
-				if (($_FILES["file"]["size"][$i] < 25000000)     // Approx. 100kb files can be uploaded.
+				if (($_FILES["file"]["size"][$i] < 25000000)     // Approx. 25mb files can be uploaded.
 				&& in_array($file_extension, $validextensions)) {
 					if (move_uploaded_file($_FILES['file']['tmp_name'][$i], $target_path)) {
 						// If file moved to uploads folder.
@@ -123,16 +131,16 @@ class Secretary extends CI_Controller
 										'office_id' => $office_id, 
 										'folder_id' => $parent_folder_id  
 							);
+						
 						$this->filesModel->saveFile($data);
 						
 						} else {     //  If File Was Not Moved.
-						echo $j. ').<span id="error">please try again!.</span><br/><br/>';
+						//echo $j. ').<span id="error">please try again!.</span><br/><br/>';
 					}
 				} else {     //   If File Size And File Type Was Incorrect.
 				//echo $j. ').<span id="error">***Invalid file Size or Type***</span><br/><br/>';
 				}
 			}
 			redirect('createFolder');
-		}
 	}
 }

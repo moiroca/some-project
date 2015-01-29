@@ -7,37 +7,39 @@ $(document).ready(function() {
 		}).fadeIn('slow').append($("<input/>", {
 		name: 'file[]',
 		type: 'file',
-		id: 'file'
+		id: 'file',
+		class: "form-control"
 		}), $("</center>")));
 	});
 	// Following function will executes on change event of file input to select different file.
-	$('body').on('change', '#file', function() {
-		if (this.files && this.files[0]) {
-			abc += 1; // Incrementing global variable by 1.
-			var z = abc - 1;
-			var x = $(this).parent().find('#previewimg' + z).remove();
-			$(this).before("<div id='abcd" + abc + "' class='abcd'><img id='previewimg" + abc + "' src=''/></div>");
-			var reader = new FileReader();
-			reader.onload = imageIsLoaded;
-			reader.readAsDataURL(this.files[0]);
-			$(this).hide();
-			$("#abcd" + abc).append($("<img/>", {
-				id: 'img',
-				src: base_url+'public/img/x.png',
-				alt: 'delete'
-			}).click(function() {
-				$(this).parent().parent().remove();
-			}));
-		}
-	});
+	// $('body').on('change', '#file', function() {
+	// 	if (this.files && this.files[0]) {
+	// 		abc += 1; // Incrementing global variable by 1.
+	// 		var z = abc - 1;
+	// 		var x = $(this).parent().find('#previewimg' + z).remove();
+	// 		$(this).before("<div id='abcd" + abc + "' class='abcd'><img id='previewimg" + abc + "' src=''/></div>");
+	// 		var reader = new FileReader();
+	// 		reader.onload = imageIsLoaded;
+	// 		reader.readAsDataURL(this.files[0]);
+	// 		$(this).hide();
+	// 		$("#abcd" + abc).append($("<img/>", {
+	// 			id: 'img',
+	// 			src: base_url+'public/img/x.png',
+	// 			alt: 'delete'
+	// 		}).click(function() {
+	// 			$(this).parent().parent().remove();
+	// 		}));
+	// 	}
+	// });
 	// To Preview Image
 	function imageIsLoaded(e) {
 		$('#previewimg' + abc).attr('src', e.target.result);
 	};
 	$('#upload').click(function(e) {
 		var name = $(":file").val();
-		if (!name) {
-			alert("First Image Must Be Selected");
+		var id = $("#user_id").val();
+		if ((!name) || (!id)) {
+			alert("Image or Employee must be Selected!");
 			e.preventDefault();
 		}
 	});

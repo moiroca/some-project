@@ -24,7 +24,7 @@ class login extends CI_Controller
 		{
 			$this->form_validation->set_rules('username', 'Username', 'required');
 			$this->form_validation->set_rules('password', 'Password', 'required');
-			$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+			$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert"><i class="fa fa-warning"></i>', '</div>');
 			
 			if($this->form_validation->run() == FALSE)
 			{

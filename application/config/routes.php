@@ -66,6 +66,14 @@ $route['changeStatusOfficeSecretary']	= "administrator/changeStatusOfficeSecreta
 $route['logout']			= "login/logout";
 $route['OfficeSecretary']			= "secretary";
 $route['createFolder']			= "secretary/createFolder";
+$route['profile/(:num)']			= "administrator/profile";
+$route['edit-profile/(:num)']			= "administrator/editProfile";
+$route['save-personal-information']			= "administrator/savePersonalInformation";
+$route['save-user-credentials']			= "administrator/saveUserCredentials";
+$route['edit-office-head-password/(:num)']			= "administrator/editOfficeHeadPassword";
+$route['update-office-head-password']			= "administrator/updateOfficeHeadPassword";
+$route['edit-office-secretary-password/(:num)']			= "administrator/editOfficeSecretaryPassword";
+$route['update-office-secretary-password']			= "administrator/updateOfficeSecretaryPassword";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

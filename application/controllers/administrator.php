@@ -27,7 +27,8 @@ class Administrator extends CI_Controller
 			'js'	  => array(
 				'bootbox.min',
 				'administrator/main'
-			)
+			),
+			'page' => 'office'
 		);
 		$this->load->view('template/content',$data);
 	}
@@ -399,5 +400,256 @@ class Administrator extends CI_Controller
 		else
 			show_404();
 	}
-
+	public function profile()
+	{
+		$user_id = loginLibrary::loggedInUser()['user_id'];
+		$this->load->model("UserModel");
+		$users = $this->UserModel->getUserById($user_id);
+		if(empty($users))
+		{
+			show_404();
+			exit;
+		}
+		$data = array(
+			'content' => 'administrator/profile/profile',
+			'user' => $users
+		);
+		$this->load->view('template/content',$data);
+	}
+	public function editProfile()
+	{
+		$this->load->library("form_validation");
+		$user_id = loginLibrary::loggedInUser()['user_id'];
+		$this->load->model("UserModel");
+		$users = $this->UserModel->getUserById($user_id);
+		if(empty($users))
+		{
+			show_404();
+			exit;
+		}
+		$data = array(
+			'content' => 'administrator/profile/editProfile',
+			'user' => $users[0],
+			'js' => array('administrator/main')
+		);
+		$this->load->view('template/content',$data);
+	}
+	public function savePersonalInformation()
+	{
+		$this->load->library("Request");
+		if(Request::isPost())
+		{
+			$this->load->library("form_validation");
+			
+			$this->form_validation->set_error_delimiters("<div class='alert alert-danger'><i class='fa fa-warning'></i>","</div>");
+			$this->form_validation->set_rules('user_id', 'User ID', 'required');
+			$this->form_validation->set_rules('username', 'Username', 'required|max_length[50]|xss_clean|callback_usernameCheck');
+			$this->form_validation->set_rules('firstname', 'First Name', 'required|max_length[50]|xss_clean');
+			$this->form_validation->set_rules('middlename', 'Middle Name', 'required|max_length[50]|xss_clean');
+			$this->form_validation->set_rules('lastname', 'Last Name', 'required|max_length[50]|xss_clean');
+			
+			if($this->form_validation->run() == FALSE)
+			{
+				$user_id = loginLibrary::loggedInUser()['user_id'];
+				$this->load->model("UserModel");
+				$users = $this->UserModel->getUserById($user_id);
+				$data = array(
+					'content' => 'administrator/profile/editProfile',
+					'user' => $users[0],
+					'js' => array('administrator/main')
+				);
+				$this->load->view('template/content',$data);
+			}
+			else
+			{
+				$this->load->model("UserModel");
+				$update = $this->UserModel->updatePersonalInformation();
+				
+				if(!$update)
+				{
+					loginLibrary::startSession();
+					loginLibrary::resetter();
+				
+					session_destroy();
+					redirect("login?retryLogin=true");
+				}else
+				{
+					$user_id = $this->input->post("user_id");
+					redirect("edit-profile/".$user_id."?updateSuccess=true");
+				}
+				
+			}
+		}
+		else
+			show_404();
+	}
+	public function saveUserCredentials()
+	{
+		$this->load->library("Request");
+		
+		if(Request::isPost())
+		{	
+			$this->load->library("form_validation");
+			
+			$this->form_validation->set_error_delimiters("<div class='alert alert-danger'><i class='fa fa-warning'></i>","</div>");
+			$this->form_validation->set_rules('user_id', 'User ID', 'required');
+			$this->form_validation->set_rules('oldpassword', 'Old Password', 'required|max_length[50]|xss_clean|callback_matchOldPassword');
+			$this->form_validation->set_rules('newpassword', 'New Password', 'required|max_length[50]|xss_clean|matches[cnpassword]');
+			$this->form_validation->set_rules('cnpassword', 'Confirm New Password', 'required|max_length[50]|xss_clean');
+			
+			if($this->form_validation->run() == FALSE)
+			{
+				$user_id = loginLibrary::loggedInUser()['user_id'];
+				$this->load->model("UserModel");
+				$users = $this->UserModel->getUserById($user_id);
+				$data = array(
+					'content' => 'administrator/profile/editProfile',
+					'user' => $users[0],
+					'js' => array('administrator/main'),
+					'isActive' => true
+				);
+				$this->load->view('template/content',$data);
+			}
+			else
+			{
+				$this->load->model("UserModel");
+				
+				$update = $this->UserModel->updateUserCredentials();
+				loginLibrary::startSession();
+				loginLibrary::resetter();
+				
+				session_destroy();
+				redirect("login?retryLogin=true");
+			}
+		}
+		else
+			show_404();
+	}
+	public function matchOldPassword($oldPassword)
+	{
+		$user_id = loginLibrary::loggedInUser()['user_id'];
+		$this->load->model("UserModel");
+		
+		$user = $this->UserModel->matchOldPassword($user_id,$oldPassword);
+		
+		if (empty($user))
+		{
+			$this->form_validation->set_message('matchOldPassword', 'Your Password did not match with your old Password.');
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+	}
+	public function usernameCheck($username)
+	{
+		$user_id = loginLibrary::loggedInUser()['user_id'];
+		$this->load->model("UserModel");
+		
+		$isUsernameExist = $this->UserModel->isUserNameExist($user_id,$username);
+		if($isUsernameExist)
+		{
+			$this->form_validation->set_message('usernameCheck', 'Username already Exist.');
+			return FALSE;
+		}
+		else
+			return true;
+	}
+	public function editOfficeHeadPassword($usr_id = false)
+	{
+		$user_id = (!$usr_id)?$this->uri->segment(2):$usr_id;
+		$this->load->model("UserModel");
+		
+		$user = $this->UserModel->getUserById($user_id);
+		if(empty($user) || (loginLibrary::loggedInUser()['user_role'] == 3))
+		{
+			show_404();
+			exit;
+		}
+		$this->load->library("form_validation");
+		$data = array(
+			'content' => 'administrator/officeHeads/editOfficeHeadPassword',
+			'js' => array('administrator/main'),
+			'user'=> $user[0]
+		);
+		$this->load->view('template/content',$data);
+	}
+	public function updateOfficeHeadPassword()
+	{
+		$this->load->library("Request");
+		
+		if(Request::isPost())
+		{	
+			$this->load->library("form_validation");
+			
+			$this->form_validation->set_error_delimiters("<div class='alert alert-danger'><i class='fa fa-warning'></i> ","</div>");
+			$this->form_validation->set_rules('user_id', 'User ID', 'required');
+			$this->form_validation->set_rules('newpassword', 'New Password', 'required|max_length[50]|xss_clean|matches[cnpassword]');
+			$this->form_validation->set_rules('cnpassword', 'Confirm New Password', 'required|max_length[50]|xss_clean');
+			
+			if($this->form_validation->run() == FALSE)
+			{
+				$user_id = $this->input->post("user_id");
+				$this->editOfficeHeadPassword($user_id);
+			}
+			else
+			{
+				$this->load->model("UserModel");
+				$update = $this->UserModel->updateUserPassword();
+				
+				redirect("officeHead");
+			}
+		}
+		else
+			show_404();
+	}
+	public function editOfficeSecretaryPassword($usr_id = FALSE)
+	{
+		$user_id = (!$usr_id)?$this->uri->segment(2):$usr_id;
+		$this->load->model("UserModel");
+		
+		$user = $this->UserModel->getUserById($user_id);
+		if(empty($user) || (loginLibrary::loggedInUser()['user_role'] == 3))
+		{
+			show_404();
+			exit;
+		}
+		$this->load->library("form_validation");
+		$data = array(
+			'content' => 'administrator/officeSecretaries/editOfficeSecretaryPassword',
+			'js' => array('administrator/main'),
+			'user'=> $user[0]
+		);
+		$this->load->view('template/content',$data);
+	}
+	public function updateOfficeSecretaryPassword()
+	{
+		$this->load->library("Request");
+		
+		if(Request::isPost())
+		{	
+			$this->load->library("form_validation");
+			
+			$this->form_validation->set_error_delimiters("<div class='alert alert-danger'><i class='fa fa-warning'></i> ","</div>");
+			$this->form_validation->set_rules('user_id', 'User ID', 'required');
+			$this->form_validation->set_rules('newpassword', 'New Password', 'required|max_length[50]|xss_clean|matches[cnpassword]');
+			$this->form_validation->set_rules('cnpassword', 'Confirm New Password', 'required|max_length[50]|xss_clean');
+			
+			if($this->form_validation->run() == FALSE)
+			{
+				$user_id = $this->input->post("user_id");
+				$this->editOfficeHeadPassword($user_id);
+			}
+			else
+			{
+				$this->load->model("UserModel");
+				$update = $this->UserModel->updateUserPassword();
+				
+				redirect("officeSecretary");
+			}
+		}
+		else
+			show_404();
+	}
 }

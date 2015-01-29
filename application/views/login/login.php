@@ -42,9 +42,10 @@
                         <form role="form" method="post" action="<?php echo base_url("login/userLogin"); ?>">
                             <fieldset>
                             	<div class="form-group">
+									<?php echo ($this->input->get("retryLogin") == "true")?"<div class='alert alert-success'><i class='fa fa-check'></i> Login With Your New Credentials!</div>":""; ?>
                                 	<?php echo validation_errors(); ?>
                                     <?php if(isset($usernotfound)):?>
-                                    	<div class="alert alert-danger">User Not Found!</div>
+                                    	<div class="alert alert-danger"><i class="fa fa-warning"></i> User Not Found!</div>
                                     <?php endif; ?>
                                 </div>
                                 <div class="form-group">
