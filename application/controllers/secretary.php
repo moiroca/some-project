@@ -29,12 +29,12 @@ class Secretary extends CI_Controller
 		$this->load->library('breadcrumbs');
 		$parent_folder_id = (int)$this->input->get("folder_id");
 		
+		$this->load->model("foldersModel");
 		if(!empty($parent_folder_id) && !$this->foldersModel->isFolderExistById($parent_folder_id,loginLibrary::loggedInUser()['user_id']))
 		{
 			show_404();
 			return false;
 		}
-		$this->load->model("foldersModel");
 		$this->load->model("OfficesModel");
 		if($parent_folder_id != 0)
 			$folders = $this->foldersModel->getChildFolderById((int)$parent_folder_id,loginLibrary::loggedInUser()['user_id']);
@@ -129,24 +129,21 @@ class Secretary extends CI_Controller
 			$user_array = loginLibrary::loggedInUser();
 			$uploaded_by_id = $user_array['user_id'];
 			$office_id_array = $this->filesModel->getOfficeByUserId($user_array['user_id'], $user_array['user_role']);
-			$office_id = 0;
-			foreach ($office_id_array as $key => $value) {
-				$office_id = $value->office_id;
-			}
-
+			$office_id = $office_id_array[0]->office_id;
 			for ($i = 0; $i < count($_FILES['file']['name']); $i++) {
-				echo $_FILES['file']['name'][$i];
 				// Loop to get individual element from the array
 				$validextensions = array("jpeg", "jpg", "png", "pdf", "ppt", "pptx", "doc", "docx", "xls");      // Extensions which are allowed.
 				$ext = explode('.', basename($_FILES['file']['name'][$i]));   // Explode file name from dot(.)
 				$file_extension = end($ext); // Store extensions in the variable.
-				$target_path = $target_path . md5(uniqid()) . "." . $ext[count($ext) - 1];     // Set the target path with a new name of image.
+				$name_in_folder = $office_id."-".date("Y-m-d").rand(1,1000). "." . $ext[count($ext) - 1];
+				$target_path = $target_path . $name_in_folder;     // Set the target path with a new name of image.
 				$j = $j + 1;      // Increment the number of uploaded images according to the files in array.
-				if (($_FILES["file"]["size"][$i] < 25000000)     // Approx. 25mb files can be uploaded.
+			// echo $name_in_folder;
+				if (($_FILES["file"]["size"][$i] > 0)     // Approx. 25mb files can be uploaded.
 				&& in_array($file_extension, $validextensions)) {
 					if (move_uploaded_file($_FILES['file']['tmp_name'][$i], $target_path)) {
 						// If file moved to uploads folder.
-						$name_in_folder = md5(uniqid()) . "." . $ext[count($ext) - 1];
+						
 						$original_file_name = $_FILES["file"]["name"][$i];
 						$file_type = $ext[count($ext) - 1];
 						$data = array('name' => $original_file_name,
@@ -157,7 +154,7 @@ class Secretary extends CI_Controller
 										'office_id' => $office_id, 
 										'folder_id' => $parent_folder_id  
 							);
-						
+						// var_dump($data);
 						$this->filesModel->saveFile($data);
 						
 						} else {     //  If File Was Not Moved.
@@ -168,5 +165,36 @@ class Secretary extends CI_Controller
 				}
 			}
 			redirect('createFolder');
+		}
+	public function fileDownload(){
+			
+			$name_in_folder = $this->input->get('name'); 
+			$name = $this->input->get('original_name');
+		
+			$path = $_SERVER['DOCUMENT_ROOT']."/public/documents/".$name_in_folder;
+			
+        if (file_exists($path)) {
+            // required for IE
+            if (ini_get('zlib.output_compression')) {
+                ini_set('zlib.output_compression', 'Off');
+            }
+
+            // get the file mime type using the file extension
+            $this->load->helper('file');
+            $mime = get_mime_by_extension($path);
+            // Build the headers to push out the file properly.
+            header('Pragma: public');     // required
+            header('Expires: 0');         // no cache
+            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path)) . ' GMT');
+            header('Cache-Control: private', false);
+            header('Content-Type: ' . $mime);  // Add the mime type from Code igniter.
+            header('Content-Disposition: attachment; filename="' . basename($name) . '"');  // Add the file name
+            header('Content-Transfer-Encoding: binary');
+            header('Content-Length: ' . filesize($path)); // provide file size
+            header('Connection: close');
+            readfile($path); // push it out
+            exit();
+     }
 	}
 }

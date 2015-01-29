@@ -8,7 +8,7 @@ class filesModel extends CI_Model
 	}
 	public function getFilesByFolderId($id, $office_id)
 	{
-		$filesInFolder = $this->db->select("files.id, files.name, users.last_name,users.first_name,users.middle_name")
+		$filesInFolder = $this->db->select("files.id, files.name, files.name_in_folder, users.last_name,users.first_name,users.middle_name")
 								 ->from("files")
 								 ->join("users", "files.user_id = users.id")
 								 ->where("files.folder_id",$id)

@@ -58,6 +58,7 @@ $route['addOfficeSecretary']			= "administrator/addOfficeSecretary";
 $route['addOfficeSecretaryForm']			= "administrator/addOfficeSecretaryForm";
 $route['fileUploadForm']			= "secretary/fileUploadForm";
 $route['fileUpload']			= "secretary/fileUpload";
+$route['fileDownload']			= "secretary/fileDownload";
 
 $route['editOfficeSecretary']			= "administrator/editOfficeSecretary";
 $route['editOfficeSecretaryForm/(:num)']			= "administrator/editOfficeSecretaryForm";
