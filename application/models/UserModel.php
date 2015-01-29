@@ -8,7 +8,7 @@ class UserModel extends CI_Model
 	}
 	public function getUser($username, $password)
 	{
-		return $this->db->select("id,first_name,middle_name,last_name,username,role_id")
+		return $this->db->select("id,first_name,middle_name,last_name,username,role_id,status")
 						->from("users")
 						->where("username",$username)
 						->where("password",md5($password))
