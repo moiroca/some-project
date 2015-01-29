@@ -3,7 +3,7 @@
 .folders{
 	margin-left:20px;
 }
-.delete{
+.delete, .edit{
 	visibility:hidden;
 }
 .folders:hover .delete
@@ -15,4 +15,18 @@
 	left:40px;
 	float:left;
 	top:-90px;
+}
+.{
+	visibility:hidden;
+}
+.folders:hover .edit
+{
+	visibility:visible;
+	width:20px;
+	height:20px;
+	position:relative;
+	left:20px;
+	float:left;
+	top:-60px;
+	cursor:pointer;
 }

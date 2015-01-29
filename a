@@ -1,0 +1,72 @@
+[33mcommit 86b125e290022fc8419755743d04dfcfe633d358[m
+Author: gapjeffreycinco <gapjeffrey.cinco@gmail.com>
+Date:   Wed Jan 28 19:42:06 2015 +0800
+
+    Remove file management to admin
+
+[33mcommit d20609cc196ccfdcdd9a2ac045a834e6f8e28dd6[m
+Merge: 96d96fc 4f8f5b6
+Author: moiroca <rocajohntemoty@gmail.com>
+Date:   Wed Jan 28 19:22:33 2015 +0800
+
+    fix merge conflict
+
+[33mcommit 4f8f5b65ba07cd1230af101ed9d46cfdf6d532d5[m
+Author: moiroca <rocajohntemoty@gmail.com>
+Date:   Wed Jan 28 19:14:11 2015 +0800
+
+    beautification of portal
+
+[33mcommit 96d96fc67f5ae381eabdf985242bd9de93413380[m
+Author: gapjeffreycinco <gapjeffrey.cinco@gmail.com>
+Date:   Wed Jan 28 19:05:41 2015 +0800
+
+    file upload
+
+[33mcommit 30521996344b8ba80ffc35addc72bf70b66072b7[m
+Author: gapjeffreycinco <gapjeffrey.cinco@gmail.com>
+Date:   Wed Jan 28 13:21:40 2015 +0800
+
+    edit the add file modal
+
+[33mcommit 2e305135e7c3b2b22ac4e7ee5d729d25a1d01842[m
+Author: gapjeffreycinco <gapjeffrey.cinco@gmail.com>
+Date:   Wed Jan 28 12:30:21 2015 +0800
+
+    Update to changes in the db. File uploadin, not yet finish.
+
+[33mcommit 7cb91cad9f19cd7ba0bb5899439f4bdd9e2f00bc[m
+Author: gapjeffreycinco <gapjeffrey.cinco@gmail.com>
+Date:   Fri Jan 23 14:29:19 2015 +0800
+
+    Roca add folder
+
+[33mcommit eb007498e97119aadc156ecc47d1eef40c5e35fd[m
+Author: gapjeffreycinco <gapjeffrey.cinco@gmail.com>
+Date:   Wed Jan 21 18:04:52 2015 +0800
+
+    CRUD office heads and secretaries and includes validation of inputs
+
+[33mcommit d726d507fbd77c53eaf13f1597f1f01424a1e831[m
+Author: gapjeffreycinco <gapjeffrey.cinco@gmail.com>
+Date:   Sat Jan 10 17:10:10 2015 +0800
+
+    Add link to office management
+
+[33mcommit c78110890897ec4c1c0dade7823abffd03e8cffc[m
+Author: moiroca <rocajohntemoty@gmail.com>
+Date:   Sat Jan 10 16:47:01 2015 +0800
+
+    Delete Office, .htaccess, added customLoader for js, added bootbox
+
+[33mcommit d671df06d7eb32ac4cc9bf8d303ee2ba4ddf8d78[m
+Author: moiroca <rocajohntemoty@gmail.com>
+Date:   Sat Jan 10 14:41:29 2015 +0800
+
+    Templating
+
+[33mcommit 6694cdc72e833d8a81310b87c0904d158e834f4a[m
+Author: moiroca <rocajohntemoty@gmail.com>
+Date:   Tue Jan 6 15:47:58 2015 +0800
+
+    initial files

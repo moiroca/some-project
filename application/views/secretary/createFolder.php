@@ -25,7 +25,7 @@
 								<p title="<?php echo $values->name; ?>"><?php echo substr($values->name,0,10)."...";?></p>
 							</a>
 							<span onclick="return deleteFolder(<?php echo $values->id; ?>)" class="delete"><i class="fa fa-trash fa-2x"></i></span>
-							
+							<span onclick="return editFolder(<?php echo $values->id; ?>,$(this))" class="edit"><i class="fa fa-edit fa-2x"></i></span>
 						</div>
 					<?php endforeach; ?>
 					</div>

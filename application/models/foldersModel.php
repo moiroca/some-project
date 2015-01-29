@@ -99,8 +99,19 @@ class foldersModel extends CI_Model
 				'name'=> $folder_name,
 				'parent_id'  => $parent_id
 			);
-			//echo json_encode($data);
 			return $this->db->insert('folders',$data);
+	}
+	public function updateFolder()
+	{
+		$folder_name	= 	$this->input->post('name');
+		$folder_id	  = 	(int)$this->input->post('folder_id');
+		
+		$this->db->where("id",$folder_id);
+		$data  = array(
+			'name'=> $folder_name
+		);
+		 
+		 return $this->db->update('folders',$data);
 	}
 	//delete folder with files inside the folder
 	public function deleteFolder()

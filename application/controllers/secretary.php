@@ -19,6 +19,7 @@ class Secretary extends CI_Controller
 	}
 	public function createFolder()
 	{
+		
 		if(!loginLibrary::isLoggedIn())
 			redirect("login");
 		
@@ -59,6 +60,20 @@ class Secretary extends CI_Controller
 		);
 		
 		$this->load->view("template/content",$data);
+		
+		/*
+		$data = array(
+			'folders' => $folders,
+			'breadCrumbs' => $parent_folder_id,
+			'files'	=> $files,
+			'users'	=> $this->OfficesModel->getUsers(),
+			'js' => array('foldering','bootbox.min'),
+			'css' => array('file_upload','foldering','admin'),
+			'content'	=> 'secretary/createFolder'
+		);
+		
+		$this->load->view("template/content",$data);
+		*/
 	}
 	public function saveFolder()
 	{
@@ -70,6 +85,17 @@ class Secretary extends CI_Controller
 			$user_id  = loginLibrary::loggedInUser()['user_id'];
 			
 			echo $this->foldersModel->saveFolder();
+		}
+		else
+			show_404();
+	}
+	public function updateFolder()
+	{
+		$this->load->library("request");
+		if(request::isAjax())
+		{
+			$this->load->model("foldersModel");
+			echo $this->foldersModel->updateFolder();
 		}
 		else
 			show_404();
