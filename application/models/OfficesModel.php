@@ -109,6 +109,17 @@ class OfficesModel extends CI_Model
 							->from('users')->get()->result();
 	}
 	// return the list of secretaries
+	
+	//return all employees 
+	/*public function getAllEmployeeByOfficeId($office_id = false)
+	{
+	  //  $this->db->where("office_id",);
+		return $this->db->select("*")->from("users")
+									->join("employee","users.id=employee.user_id","inner")
+									->get()
+									->result();
+									
+	}*/
 	public function getSecretaries()
 	{
 		return $this->db->select('users.id, users.last_name, users.first_name,users.username, users.middle_name, users.status,  offices.description, offices.id as officeId')

@@ -8,7 +8,8 @@
 			<?php echo validation_errors(); ?>
 			<form method="POST" action=<?php echo base_url("addOfficeSecretary"); ?> class="form">
 				<div class="form-group">
-					<label class="control-label">Office <i class="fa fa-asterisk"></i> </label>
+                  <input type="hidden" value="<?php echo $office_id; ?>" name="office_id" required />
+                    <!-- <label class="control-label">Office <i class="fa fa-asterisk"></i> </label>
 					<?php if(!empty($offices)): ?>
 						<select required class="form-control" name="office_id">
 							<option value="">Select Office</option>
@@ -21,6 +22,7 @@
 					<?php else: ?>
 						<label class="label label-danger">Please Add Office</label>
 					<?php endif; ?>
+                    -->
 				</div>
 				<div class="form-group">
 					<label class="control-label">Last Name <i class="fa fa-asterisk"></i> </label>

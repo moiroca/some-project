@@ -8,7 +8,11 @@ function saveFolder(id)
 				type: "POST",
 				url: base_url+"secretary/saveFolder",
 				data: {name:result,folder_id:id},
+				beforeSend: function() {
+                      $("#loader").show();
+				},
 				success: function(result){
+					$("#loader").hide();
 					var con = bootbox.alert("Folder Created!");
 					if(id != null)
 						window.location.href=base_url+"createFolder?folder_id="+id;
@@ -67,6 +71,7 @@ function saveFile(id)
 
 $(document).ready(function()
 {
+	$("#loader").hide();
 	$(".delete").on("click",function($this)
 	{
 		//alert($this);
@@ -81,6 +86,9 @@ function deleteFolder($folder_id,$parent_id)
 				type: "POST",
 				url: base_url+"administrator/deleteFolder",
 				data: {folder_id:$folder_id},
+				beforeSend: function() {
+                      $("#loader").show();
+				},
 				success: function(result){
 					if($parent_id != null)
 						window.location.href=base_url+"createFolder?folder_id="+$parent_id;
@@ -104,6 +112,9 @@ function editFolder($folder_id,button)
 				type: "POST",
 				url: base_url+"secretary/updateFolder",
 				data: {name:result,folder_id:$folder_id},
+				beforeSend: function() {
+                      $("#loader").show();
+				},
 				success: function(result){
 					var con = bootbox.alert("Folder Update!");
 					window.location.href=base_url+"createFolder";

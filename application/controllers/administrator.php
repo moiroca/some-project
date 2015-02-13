@@ -307,10 +307,12 @@ class Administrator extends CI_Controller
 	{
 		$this->load->model("OfficesModel");
 		$this->load->library('form_validation');
-
+		$this->load->model("UserModel");
+		session_start();
+        $office_id = $this->UserModel->getOfficeHeadById($_SESSION['user_id']);
 		$data = array(
 			'content' => 'administrator/officeSecretaries/addOfficeSecretary',
-			'offices' => $this->OfficesModel->getOffices()
+			'office_id' =>  $office_id[0]->office_id
 			);
 		$this->load->view('template/content',$data);
 	}

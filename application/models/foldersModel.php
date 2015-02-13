@@ -118,6 +118,12 @@ class foldersModel extends CI_Model
 	{
 		$folder_id = $this->input->post("folder_id");
 		
+		$files = $this->db->select("*")->from("files")->where("folder_id",$folder_id)->get()->result();
+		
+		foreach($files as $key => $data)
+		{
+			unlink($_SERVER['DOCUMENT_ROOT']."/public/documents/".$data->name_in_folder);
+		}
 		$this->db->where("folder_id",$folder_id);
 		$this->db->delete("files");
 		

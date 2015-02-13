@@ -77,14 +77,14 @@
 										 </li>
 									 </ul>
                                 </li>
-								<li>
+								<!--<li>
                                     <a href=<?php echo base_url("employee"); ?>><i class="fa fa-user"></i> Employee Management</a>
 									<ul class="nav nav-third-level">
 										 <li>
 											<a href="<?php echo base_url("addEmployeeForm"); ?>"><i class="fa fa-user-times"></i> Add Employee</a>
 										 </li>
 									 </ul>
-                                </li>
+                                </li>-->
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>

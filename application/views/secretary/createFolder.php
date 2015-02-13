@@ -11,13 +11,14 @@
 	
 	<div class="row">
     	<div class="col-lg-12">
+         
 			<div class="panel panel-primary">
 			  <div class="panel-heading clearfix">
 				Folders	<a class="pull-right btn btn-danger btn-xs" onclick="saveFolder(<?php echo ($this->input->Get("folder_id")?$this->input->Get("folder_id"):0);?>);"><i class='fa fa-save'></i>  Add Folder</a>
 			  </div>
 			  <div class="panel-body">
 				<?php if(!empty($folders)):?>
-					<div id="folders">
+                        <img id="loader" width="50" height="50" style="position:absolute; left: 45%; top:45%; z-index:100;  " src="<?php echo base_url("public/img/loading.gif"); ?>" />					<div id="folders">
 						<?php foreach($folders as $key => $values): ?>
 						<div class="pull-left folders" style="margin-left:20px;">
 							<a title="<?php echo $values->name; ?>" href=<?php echo base_url("secretary/createFolder?folder_id=".$values->id);?>>
