@@ -8,21 +8,23 @@
 			<?php echo validation_errors(); ?>
 			<form method="POST" action=<?php echo base_url("addOfficeSecretary"); ?> class="form">
 				<div class="form-group">
-                  <input type="hidden" value="<?php echo $office_id; ?>" name="office_id" required />
-                    <!-- <label class="control-label">Office <i class="fa fa-asterisk"></i> </label>
-					<?php if(!empty($offices)): ?>
-						<select required class="form-control" name="office_id">
-							<option value="">Select Office</option>
-							<?php foreach($offices as $key => $values): ?>
-								<option value="<?php echo $values->id; ?>">
-									<?php echo $values->description; ?>
-								</option>
-							<?php endforeach; ?>
-						</select>
-					<?php else: ?>
-						<label class="label label-danger">Please Add Office</label>
-					<?php endif; ?>
-                    -->
+				  <?php if(loginLibrary::isLoggedInAdministrator()): ?>
+                    <label class="control-label">Office <i class="fa fa-asterisk"></i> </label>
+                      <?php if(!empty($offices)): ?>
+                          <select required class="form-control" name="office_id">
+                              <option value="">Select Office</option>
+                              <?php foreach($offices as $key => $values): ?>
+                                  <option value="<?php echo $values->id; ?>">
+                                      <?php echo $values->description; ?>
+                                  </option>
+                              <?php endforeach; ?>
+                          </select>
+                      <?php else: ?>
+                          <label class="label label-danger">Please Add Office</label>
+                      <?php endif; ?>
+                  <?php else: ?>
+                    <input type="hidden" value="<?php echo $office_id; ?>" name="office_id" required />
+                  <?php endif; ?>
 				</div>
 				<div class="form-group">
 					<label class="control-label">Last Name <i class="fa fa-asterisk"></i> </label>

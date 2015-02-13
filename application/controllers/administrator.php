@@ -307,13 +307,18 @@ class Administrator extends CI_Controller
 	{
 		$this->load->model("OfficesModel");
 		$this->load->library('form_validation');
-		$this->load->model("UserModel");
-		session_start();
-        $office_id = $this->UserModel->getOfficeHeadById($_SESSION['user_id']);
-		$data = array(
-			'content' => 'administrator/officeSecretaries/addOfficeSecretary',
-			'office_id' =>  $office_id[0]->office_id
-			);
+         $this->load->model("UserModel");
+		 session_Start();
+		 $office = array();
+		 $data = array();
+		if(loginLibrary::isLoggedInOfficeHead()) {
+			 $office = $this->UserModel->getOfficeHeadById($_SESSION['user_id']);
+			 $data['office_id'] = $office[0]->office_id;
+		 }
+	    
+		$data['content'] = 'administrator/officeSecretaries/addOfficeSecretary';
+		$data['offices'] = $this->OfficesModel->getOffices();
+		
 		$this->load->view('template/content',$data);
 	}
 	// This will change the current status of the office Secretary
