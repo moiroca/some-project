@@ -38,6 +38,7 @@
 			</div>
 		</div>
 	</div>
+	<?php if($this->input->get('folder_id')): ?>
 	<div class="row">
     	<div class="col-lg-12">
 			<div class="panel panel-primary">
@@ -54,6 +55,7 @@
 					<tr >
 						<th>Name</th>
 						<th>Document</th>
+						<th>Action</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -61,7 +63,11 @@
 						<?php foreach($files as $key => $values): ?>
 							<tr>
 								<td><?php echo $values->last_name; ?>, <?php echo $values->first_name; ?>&nbsp;<?php echo $values->middle_name; ?></td>
-								<td><a href="<?php echo base_url('fileDownload'); ?>?name=<?php echo $values->name_in_folder; ?>&original_name=<?php echo $values->name; ?>"><?php echo $values->name; ?></a></td>
+								<td><?php echo $values->name; ?></td>
+								<td><a class="btn btn-danger btn-xs" href="<?php echo base_url('fileDownload'); ?>?name=<?php echo $values->name_in_folder; ?>&original_name=<?php echo $values->name; ?>">Download</a>
+									 | 
+									<a class="btn btn-danger btn-xs" onclick="deleteFile('<?php echo $values->id; ?>', '<?php echo $values->name_in_folder; ?>', '<?php echo $this->input->get('folder_id'); ?>')">Delete</a>
+								</td>
 							</tr>
 						<?php endforeach; ?>
 					<?php else: ?>
@@ -75,7 +81,7 @@
 			</div>
         </div>
     </div>
-
+<?php endif; ?>
     <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -127,3 +133,4 @@
     </div>
   </div>
 </div>
+    <script src=<?php echo base_url("public/js/file_upload.js"); ?> ></script>

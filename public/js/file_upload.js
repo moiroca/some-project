@@ -11,27 +11,6 @@ $(document).ready(function() {
 		class: "form-control"
 		}), $("</center>")));
 	});
-	// Following function will executes on change event of file input to select different file.
-	// $('body').on('change', '#file', function() {
-	// 	if (this.files && this.files[0]) {
-	// 		abc += 1; // Incrementing global variable by 1.
-	// 		var z = abc - 1;
-	// 		var x = $(this).parent().find('#previewimg' + z).remove();
-	// 		$(this).before("<div id='abcd" + abc + "' class='abcd'><img id='previewimg" + abc + "' src=''/></div>");
-	// 		var reader = new FileReader();
-	// 		reader.onload = imageIsLoaded;
-	// 		reader.readAsDataURL(this.files[0]);
-	// 		$(this).hide();
-	// 		$("#abcd" + abc).append($("<img/>", {
-	// 			id: 'img',
-	// 			src: base_url+'public/img/x.png',
-	// 			alt: 'delete'
-	// 		}).click(function() {
-	// 			$(this).parent().parent().remove();
-	// 		}));
-	// 	}
-	// });
-	// To Preview Image
 	function imageIsLoaded(e) {
 		$('#previewimg' + abc).attr('src', e.target.result);
 	};
@@ -44,3 +23,38 @@ $(document).ready(function() {
 		}
 	});
 });
+
+function deleteFile(file_id, name_in_folder, folder_id){
+	bootbox.confirm("Are you sure you want to delete this file?", function(result) {          
+		if(result)
+		{
+			$.ajax({
+				type: "POST",
+				url: base_url+"secretary/fileDelete",
+				data: {name:name_in_folder,file_id:file_id},
+				beforeSend: function() {
+                      $("#loader").show();
+				},
+				success: function(result){
+					$("#loader").hide();
+					bootbox.alert("File Deleted!");
+					window.location.href=base_url+"createFolder?folder_id="+folder_id;
+					
+				}
+			});
+		}
+		else		
+		{
+			bootbox.dialog({
+			  message: "File not deleted.",
+			  title: "Warning:",
+			  buttons: {
+				danger: {
+				  label: "Ok",
+				  className: "btn-danger"
+				}
+			  }
+			});
+		}
+	});	
+}

@@ -38,4 +38,8 @@ class filesModel extends CI_Model
 	public function saveFile($data){
 		return $this->db->insert('files', $data);
 	}
+	public function deleteFile($file_id){
+		$this->db->where("id", $file_id);
+		$this->db->delete("files");
+	}
 }

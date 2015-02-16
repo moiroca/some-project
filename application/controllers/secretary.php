@@ -129,18 +129,18 @@ class Secretary extends CI_Controller
 			
 
 			$j = 0;     // Variable for indexing uploaded image.
-			$target_path = 'public/documents/'; // Declaring Path for uploaded images.
 			$parent_folder_id = (int)$this->input->post("folderId");
 			$user_array = loginLibrary::loggedInUser();
 			$uploaded_by_id = $user_array['user_id'];
 			$office_id_array = $this->filesModel->getOfficeByUserId($user_array['user_id'], $user_array['user_role']);
 			$office_id = $office_id_array[0]->office_id;
 			for ($i = 0; $i < count($_FILES['file']['name']); $i++) {
+				$target_path = 'public/documents/'; // Declaring Path for uploaded images.
 				// Loop to get individual element from the array
 				$validextensions = array("jpeg", "jpg", "png", "pdf", "ppt", "pptx", "doc", "docx", "xls");      // Extensions which are allowed.
 				$ext = explode('.', basename($_FILES['file']['name'][$i]));   // Explode file name from dot(.)
 				$file_extension = end($ext); // Store extensions in the variable.
-				$name_in_folder = $office_id."-".date("Y-m-d").rand(1,1000). "." . $ext[count($ext) - 1];
+				$name_in_folder = $office_id."-".date("Y-m-d")."-".rand(1,10000). "." . $ext[count($ext) - 1];
 				$target_path = $target_path . $name_in_folder;     // Set the target path with a new name of image.
 				$j = $j + 1;      // Increment the number of uploaded images according to the files in array.
 			// echo $name_in_folder;
@@ -169,7 +169,7 @@ class Secretary extends CI_Controller
 				//echo $j. ').<span id="error">***Invalid file Size or Type***</span><br/><br/>';
 				}
 			}
-			redirect('createFolder');
+			redirect("createFolder?folder_id=".$parent_folder_id);
 		}
 	public function fileDownload(){
 			
@@ -199,7 +199,16 @@ class Secretary extends CI_Controller
             header('Content-Length: ' . filesize($path)); // provide file size
             header('Connection: close');
             readfile($path); // push it out
-            exit();
-     }
+     	}
+     	redirect('createFolder');
+	}
+	public function fileDelete(){
+		$this->load->model("filesModel");
+		$file_id = $this->input->post("file_id");
+		$name_in_folder = $this->input->post("name");
+		$path = $_SERVER['DOCUMENT_ROOT']."/public/documents/".$name_in_folder;
+		
+		unlink($path);
+		$this->filesModel->deleteFile($file_id);
 	}
 }
