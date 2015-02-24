@@ -659,4 +659,23 @@ class Administrator extends CI_Controller
 		else
 			show_404();
 	}
+	public function searchFile()
+	{
+		$this->load->model("filesModel");
+		$searchData = $this->input->get("searchFile");
+		$searchFile = $this->filesModel->searchFile();
+
+		$data = array(
+				"content" => "secretary/searchFile",
+				);
+		if(empty($searchData) || $searchData == "")
+		{
+			$data["files" ] = null;
+		}else{
+				$data["files"] = $searchFile;
+		}
+		
+
+		$this->load->view("template/content",$data);
+	}
 }

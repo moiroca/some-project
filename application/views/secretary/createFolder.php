@@ -9,12 +9,28 @@
 		</div>
 	</div>
 	
-	<div class="row">
+	<div class="row" style="margin-bottom:10px;">
+		<form method="GET" action="<?php echo base_url("administrator/searchFile"); ?>">
+			<div class="col-lg-12">
+				<div class="pull-right">
+					<div class="form-group clearfix">
+						<div class="control-group">
+							<label style="font-size:20px; margin-top:10px; position:relative; top:5px;" >Search File</label>
+							<input style="width:300px; height:35px;" type="text" name="searchFile" />	
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div><!-- /.row -->
+
+	<div class="row" >
     	<div class="col-lg-12">
          
 			<div class="panel panel-primary">
 			  <div class="panel-heading clearfix">
 				Folders	<a class="pull-right btn btn-danger btn-xs" onclick="saveFolder(<?php echo ($this->input->Get("folder_id")?$this->input->Get("folder_id"):0);?>);"><i class='fa fa-save'></i>  Add Folder</a>
+				
 			  </div>
 			  <div class="panel-body">
 				<?php if(!empty($folders)):?>
@@ -54,7 +70,9 @@
 					<thead>
 					<tr >
 						<th>Name</th>
-						<th>Document</th>
+						<th>Title</th>
+						<th>File Name</th>
+						<th>Description / Other Info</th>
 						<th>Action</th>
 					</tr>
 					</thead>
@@ -62,8 +80,24 @@
 					<?php if($files): ?>
 						<?php foreach($files as $key => $values): ?>
 							<tr>
-								<td><?php echo $values->last_name; ?>, <?php echo $values->first_name; ?>&nbsp;<?php echo $values->middle_name; ?></td>
+								<td>
+									<?php if($values->user_id != 0){ ?>
+										<?php echo $values->last_name; ?>, 
+										<?php echo $values->first_name; ?>&nbsp;
+										<?php echo $values->middle_name; ?>
+									<?php } else {
+										echo "General File";
+									}?>
+								</td>
+								<td><?php echo $values->file_title; ?></td>
 								<td><?php echo $values->name; ?></td>
+								<td><?php 
+									echo $values->file_description;
+									 if( (!empty($values->file_description)) && (!empty($values->other_info))){ 
+									 	echo " / "; 
+									 }
+									 echo $values->other_info; ?>
+								</td>
 								<td><a class="btn btn-danger btn-xs" href="<?php echo base_url('fileDownload'); ?>?name=<?php echo $values->name_in_folder; ?>&original_name=<?php echo $values->name; ?>">Download</a>
 									 | 
 									<a class="btn btn-danger btn-xs" onclick="deleteFile('<?php echo $values->id; ?>', '<?php echo $values->name_in_folder; ?>', '<?php echo $this->input->get('folder_id'); ?>')">Delete</a>
@@ -72,7 +106,7 @@
 						<?php endforeach; ?>
 					<?php else: ?>
 						<tr>
-							<td colspan=3><div class='alert alert-info'><i class="fa fa-info"></i> No Uploaded File!</div></td>
+							<td colspan=5><div class='alert alert-info'><i class="fa fa-info"></i> No Uploaded File!</div></td>
 						</tr>
 					<?php endif; ?>
 					</tbody>
@@ -100,22 +134,45 @@
 				<div id="formdiv">
 					<form enctype="multipart/form-data" action="<?php echo base_url('fileUpload'); ?>" method="post" class="fileUploadForm">
 						<input type="hidden" name="folderId" value="<?php echo $this->input->get('folder_id'); ?>">
-						<div class="form-group">
+						
+						<div class="form-group well">
+									<input type="radio"  name="fileFolder" id="ind-folder"  value="1" checked> Individual Folder
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<input type="radio"  name="fileFolder" value="0" id="gen-folder"> General Folder
+						</div>
+						<div class="form-group ind-folder-div well">
 							<label class="control-label pull-left"> Employee </label>
+							<hr>
+							<div style="margin-bottom: 70px;"class="input-prepend" name="searchKey">
+				                	<select class="col-sm-4" id="searchKey">
+				                		<option value="0">Search by</option>
+				                		<option value="1">ID</option>
+				                		<option value="2">Lastname</option>
+				                	</select>
+				              		<input class="col-sm-8" onKeyUp="search(this.value)" id="appendedPrependedDropdownButton" type="text" name="searchMe" placeholder="Search">
+				              </div>
 							<?php if(!empty($users)): ?>
 								<select class="form-control"  name="user_id" id="user_id">
 									<option value="">----- Select Employee ------</option>
 									<?php foreach($users as $key => $values): ?>
-										<option value="<?php echo $values->id ?>" ><?php echo $values->last_name.", ".$values->first_name." ".$values->middle_name; ?></option>
+										<option value="<?php echo $values->id ?>" id="names"><?php echo $values->last_name.", ".$values->first_name." ".$values->middle_name; ?></option>
 									<?php endforeach; ?>
 								</select>
 							<?php else: ?>
 								<div class="alert alert-info"> <i class="fa fa-info"></i> No Employee Found! </div>
 							<?php endif; ?>
 						</div>
-						<div class="form-group">
-							<div id="filediv"><input class="form-control" name="file[]" type="file" id="file"/></div>
+
+						<div id="filediv" class="form-group well">
+								<!-- <i class="fa fa-times pull-right"></i> -->
+								<img src="<?php echo base_url('public/img/x.png') ?>" id="img" class="xxx">
+								<input class="form-control" name="file[]" type="file" id="file"/>
+								<input class="form-control" placeholder="Title" name="fileTitle[]" type="text" id="fileTitle"/>
+								<input class="form-control" placeholder="Description" name="fileDescription[]" type="text" id="fileDescription"/>
+								<input class="form-control" placeholder="Other Information" name="fileOtherInfo[]" type="text" id="fileOtherInfo"/>
+						
 						</div>
+						
 						<div class="clearfix">
 							<button type="button" id="add_more" class="btn btn-primary"><i class="fa fa-save"></i> Add More Files</button>
 							<button type="submit" id="upload" class="btn btn-danger"/><i class="fa fa-upload"></i> Upload</button>
@@ -133,4 +190,4 @@
     </div>
   </div>
 </div>
-    <script src=<?php echo base_url("public/js/file_upload.js"); ?> ></script>
+

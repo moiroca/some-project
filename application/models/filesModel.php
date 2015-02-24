@@ -8,9 +8,9 @@ class filesModel extends CI_Model
 	}
 	public function getFilesByFolderId($id, $office_id)
 	{
-		$filesInFolder = $this->db->select("files.id, files.name, files.name_in_folder, users.last_name,users.first_name,users.middle_name")
+		$filesInFolder = $this->db->select("files.id, files.name, files.name_in_folder, users.last_name,users.first_name,users.middle_name, files.file_title, files.file_description, files.other_info, files.user_id")
 								 ->from("files")
-								 ->join("users", "files.user_id = users.id")
+								 ->join("users", "files.user_id = users.id","left")
 								 ->where("files.folder_id",$id)
 								 ->where("files.office_id",$office_id)
 								 ->order_by("files.office_id", 'asc')
@@ -41,5 +41,15 @@ class filesModel extends CI_Model
 	public function deleteFile($file_id){
 		$this->db->where("id", $file_id);
 		$this->db->delete("files");
+	}
+	public function searchFile()
+	{
+		$searchFile = $this->input->get("searchFile");
+		$user_id = loginLibrary::loggedInUser()["user_id"];
+		return $this->db->query("(SELECT id, name, file_type, folder_id FROM files where user_id = ".$user_id." and name LIKE '%$searchFile%')
+UNION
+(SELECT id, name, parent_id,user_id FROM folders where user_id = ".$user_id." and name LIKE '%$searchFile%')")->result_object();
+
+		//return $this->db->select("*")->from("files")->like("name",$searchFile)->get()->result();
 	}
 }

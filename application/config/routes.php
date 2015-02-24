@@ -77,6 +77,6 @@ $route['edit-office-head-password/(:num)']			= "administrator/editOfficeHeadPass
 $route['update-office-head-password']			= "administrator/updateOfficeHeadPassword";
 $route['edit-office-secretary-password/(:num)']			= "administrator/editOfficeSecretaryPassword";
 $route['update-office-secretary-password']			= "administrator/updateOfficeSecretaryPassword";
-
+$route['searchEmployee'] = "secretary/search";
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

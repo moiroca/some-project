@@ -56,7 +56,7 @@ class Secretary extends CI_Controller
 			'breadCrumbs' => $parent_folder_id,
 			'files'	=> $files,
 			'users'	=> $this->OfficesModel->getUsers(),
-			'js' => array('foldering','bootbox.min'),
+			'js' => array('foldering','bootbox.min',"file_upload"),
 			'css' => array('file_upload','foldering','admin'),
 			'content'	=> 'secretary/createFolder'
 		);
@@ -116,24 +116,31 @@ class Secretary extends CI_Controller
 		if(!loginLibrary::isLoggedIn())
 			redirect("login");
 
-			$user_id = 0;
+			$parent_folder_id = (int)$this->input->post("folderId");
+			$user_id = 0; // default value, for general folder
 			$this->load->model('filesModel');
 			$this->load->library('form_validation');
 
-			$this->form_validation->set_rules('user_id', 'Employee', 'required');
-			if ($this->form_validation->run() == FALSE){
-				redirect('createFolder');
-			}else{
-				$user_id = $this->input->post('user_id');
+			$fileFolder = $this->input->post('fileFolder');
+			if ($fileFolder==1){
+				$this->form_validation->set_rules('user_id', 'Employee', 'required');
+				if ($this->form_validation->run() == FALSE) {
+					$user_id = $this->input->post('user_id');
+				}else{
+					redirect('createFolder?folder_id=".$parent_folder_id');	
+				}
 			}
+			
 			
 
 			$j = 0;     // Variable for indexing uploaded image.
-			$parent_folder_id = (int)$this->input->post("folderId");
 			$user_array = loginLibrary::loggedInUser();
 			$uploaded_by_id = $user_array['user_id'];
 			$office_id_array = $this->filesModel->getOfficeByUserId($user_array['user_id'], $user_array['user_role']);
 			$office_id = $office_id_array[0]->office_id;
+			$fileTitle = $this->input->post("fileTitle");
+			$fileDescription = $this->input->post("fileDescription");
+			$fileOtherInfo = $this->input->post("fileOtherInfo");
 			for ($i = 0; $i < count($_FILES['file']['name']); $i++) {
 				$target_path = 'public/documents/'; // Declaring Path for uploaded images.
 				// Loop to get individual element from the array
@@ -150,6 +157,9 @@ class Secretary extends CI_Controller
 						// If file moved to uploads folder.
 						
 						$original_file_name = $_FILES["file"]["name"][$i];
+						$title = $fileTitle[$i];
+						$description = $fileDescription[$i];
+						$otherInfo = $fileOtherInfo[$i];
 						$file_type = $ext[count($ext) - 1];
 						$data = array('name' => $original_file_name,
 										'name_in_folder' => $name_in_folder, 
@@ -157,7 +167,11 @@ class Secretary extends CI_Controller
 										'uploaded_by_id' => $uploaded_by_id, 
 										'file_type' => $file_extension, 
 										'office_id' => $office_id, 
-										'folder_id' => $parent_folder_id  
+										'folder_id' => $parent_folder_id,
+										'file_title' => $title, 
+										'file_description' => $description, 
+										'other_info' => $otherInfo 
+
 							);
 						// var_dump($data);
 						$this->filesModel->saveFile($data);
@@ -210,5 +224,33 @@ class Secretary extends CI_Controller
 		
 		unlink($path);
 		$this->filesModel->deleteFile($file_id);
+	}
+	public function search()
+	{
+		header("Content-Type: application/json");
+		$this->load->library("request");
+
+		if(Request::isAjax())
+		{
+			$searchData = $this->input->post("searchData");
+			$searchKey = $this->input->post("searchKey");
+
+			$data = null;
+
+			$this->load->model("EmployeeModel");
+
+			if($searchKey == 2)
+			{
+				$data = $this->EmployeeModel->getAllEmployeeLastName($searchData);
+			}
+			else if($searchKey == 1)
+			{
+				$data = $this->EmployeeModel->getEmployeeById($searchData);
+
+			}
+			echo json_encode($data);
+			
+		}else
+			show_404();
 	}
 }
