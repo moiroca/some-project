@@ -662,6 +662,7 @@ class Administrator extends CI_Controller
 	public function searchFile()
 	{
 		$this->load->model("filesModel");
+		$this->load->library("fileLibrary");
 		$searchData = $this->input->get("searchFile");
 		$searchFile = $this->filesModel->searchFile();
 

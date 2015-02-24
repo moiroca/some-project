@@ -48,7 +48,7 @@ class filesModel extends CI_Model
 		$user_id = loginLibrary::loggedInUser()["user_id"];
 		return $this->db->query("(SELECT id, name, file_type, folder_id FROM files where user_id = ".$user_id." and name LIKE '%$searchFile%')
 UNION
-(SELECT id, name, parent_id,user_id FROM folders where user_id = ".$user_id." and name LIKE '%$searchFile%')")->result_object();
+(SELECT id, name, parent_id, user_id FROM folders where user_id = ".$user_id." and name LIKE '%$searchFile%')")->result_object();
 
 		//return $this->db->select("*")->from("files")->like("name",$searchFile)->get()->result();
 	}

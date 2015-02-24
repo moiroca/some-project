@@ -24,7 +24,6 @@
 			<div class="panel panel-primary">
 			  <div class="panel-heading clearfix">
 				Folders	
-				<?php echo loginLibrary::loggedInUser()["user_id"]; ?>
 			  </div>
 			  <div class="panel-body">
 				<table class="table table-condensed talbe-striped">
@@ -34,6 +33,7 @@
 						<tr>
 							<th>File Name</th>
 							<th> Folder Location </th>
+							<th>File Description</th>
 							<th> Type</th>
 						</tr>
 						<?php if(!empty($files)): ?>
@@ -41,6 +41,7 @@
 								<tr>
 									<td><?php echo $values->name; ?></td>
 									<td><?php echo ($values->file_type != "0")?"<a href=".base_url('secretary/createFolder?folder_id='.$values->folder_id).">Open File Location</a>":"<a href=".base_url('secretary/createFolder?folder_id='.$values->id).">Open Folder</a>"; ?></td>
+									<td><?php echo !empty(fileLibrary::getDescriptionById($values->id))?fileLibrary::getDescriptionById($values->id)[0]->file_description:""; ?></td>
 									<td><?php echo ($values->file_type == "0")?"Folder":$values->file_type; ?></td>
 								</tr>
 							<?php endforeach; ?>
