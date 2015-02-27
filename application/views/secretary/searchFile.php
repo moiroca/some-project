@@ -47,7 +47,7 @@
 							<?php endforeach; ?>
 						<?php else: ?>
 							<tr>
-								<td colspan=3> <div class="alert alert-danger">No File or Folder Found!</div></td>
+								<td colspan="4"> <div class="alert alert-danger">No File or Folder Found!</div></td>
 							</tr>
 						<?php endif;?>
 					</tbody>

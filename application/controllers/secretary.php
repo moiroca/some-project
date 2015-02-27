@@ -124,10 +124,10 @@ class Secretary extends CI_Controller
 			$fileFolder = $this->input->post('fileFolder');
 			if ($fileFolder==1){
 				$this->form_validation->set_rules('user_id', 'Employee', 'required');
-				if ($this->form_validation->run() == FALSE) {
+				if ($this->form_validation->run() == TRUE) {
 					$user_id = $this->input->post('user_id');
 				}else{
-					redirect('createFolder?folder_id=".$parent_folder_id');	
+					redirect("createFolder?folder_id=".$parent_folder_id);	
 				}
 			}
 			
@@ -183,7 +183,7 @@ class Secretary extends CI_Controller
 				//echo $j. ').<span id="error">***Invalid file Size or Type***</span><br/><br/>';
 				}
 			}
-			redirect("createFolder?folder_id=".$parent_folder_id);
+			 redirect("createFolder?folder_id=".$parent_folder_id);
 		}
 	public function fileDownload(){
 			

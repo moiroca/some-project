@@ -82,10 +82,10 @@ function search(searchMe){
 					text: "Please Select Employee"}));
 			$.each(response,function(index,value){
 				$("#user_id").append($('<option>',{
-					value: value.last_name,
+					value: value.id,
 					text: value.last_name+ " " +value.first_name}));
 			});
-			console.log(response);
+			// console.log(response);
 		}
 	});
 }
